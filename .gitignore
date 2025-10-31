@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Data directories (created at runtime)
+data/
+logs/
+downloads/
+comprehensive_logs/
+run_logs/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Config files with sensitive data (user should create their own)
+unified_config.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# Logs
+*.log
+
