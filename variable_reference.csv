@@ -1,0 +1,114 @@
+Technical Name,Description,What to Enter (also shown as help text in GUI),Update Frequency,Subheader,GUI Location
+step1.keyword_boxes[],Search keyword groups - one keyword randomly selected from each box and combined into search query,"Enter search terms describing ideal leads. Put related terms in same box separated by commas. Leave boxes empty to skip.",Updated Every Run,Discovery Keywords,Step 1 Tab
+step1.keyword_box_count,Number of keyword boxes to display in the interface,How many keyword boxes you want. More boxes = more specific searches but fewer combinations. Range: 1-50. Typical: 3-8,Updated Every Run,Discovery Keywords,Step 1 Tab
+step4.provider_choice,AI provider selection - which AI service to use,Choose Claude (Anthropic) OpenAI (ChatGPT) or Gemini (Google). Claude recommended for accuracy.,Updated Every Run,AI Configuration,Step 2 Tab
+step4.model_choice,Which of the 4 models to use for the selected provider,Choose Model 1 (cheapest/fastest) through Model 4 (smartest/slowest). Model 1-2 good for most runs.,Updated Every Run,AI Configuration,Step 2 Tab
+step4.api_key,API key for Claude or OpenAI,Paste your API key from the AI provider's website. Get from console.anthropic.com or platform.openai.com,Updated Every Run,AI Configuration,Step 2 Tab
+step4.gemini_api_key,API key for Google Gemini,If using Gemini paste that API key here. Get from aistudio.google.com,Updated Every Run,AI Configuration,Step 2 Tab
+step4.credit_limit,Maximum spend limit in dollars for AI calls this run,Maximum amount willing to spend on AI. System stops if reached. Start with $5-10 for testing; $50+ for full runs.,Updated Every Run,AI Configuration,Step 2 Tab
+step4.scoring_fields[].enabled,Whether this scoring field is active,Check to use this field; uncheck to skip it,Updated Every Run,Scoring Fields,Step 2 Tab
+step4.scoring_fields[].type,Field type - score gives a number; text gives a category,Choose 'score' for numeric rating or 'text' for category/label selection,Updated Every Run,Scoring Fields,Step 2 Tab
+step4.scoring_fields[].title,Short name shown in output CSV column header,Brief descriptive name like 'Relevance' or 'Company Size',Updated Every Run,Scoring Fields,Step 2 Tab
+step4.scoring_fields[].min,Minimum value for score-type fields,Lower bound of scoring range (e.g. 0),Updated Every Run,Scoring Fields,Step 2 Tab
+step4.scoring_fields[].max,Maximum value for score-type fields,Upper bound of scoring range (e.g. 10),Updated Every Run,Scoring Fields,Step 2 Tab
+step4.scoring_fields[].allow_unlisted,For text fields - can AI give answers not in options list,Check if AI can provide custom answers beyond your listed options,Updated Every Run,Scoring Fields,Step 2 Tab
+step4.scoring_fields[].allow_multiple,For text fields - can AI select multiple options,Check if AI can select more than one option (separated by semicolons),Updated Every Run,Scoring Fields,Step 2 Tab
+step4.scoring_fields[].prompt,Instructions telling AI exactly what to look for and how to score,Write clear instructions for AI about what criteria to evaluate,Updated Every Run,Scoring Fields,Step 2 Tab
+step4.scoring_fields[].options,For text fields - list of categories AI can choose from,List options separated by semicolons (e.g. Small; Medium; Large),Updated Every Run,Scoring Fields,Step 2 Tab
+step4.good_leads_domains,Comma-separated list of domains to scrape as good lead examples,Enter domains of ideal customer websites (e.g. company1.com; company2.com). Bot will scrape and summarize these as reference.,Updated Every Run,Good Leads Reference,Step 2 Tab
+step4.good_leads_max_pages_per_site,Maximum pages to crawl per good lead website,How many pages to visit on each good lead site. Typical: 8-15.,Updated Every Run,Good Leads Reference,Step 2 Tab
+step4.good_leads_max_depth,Maximum crawl depth for good lead websites,How many clicks deep from homepage. Typical: 2.,Updated Every Run,Good Leads Reference,Step 2 Tab
+step4.good_leads_max_chars_per_page,Maximum text to extract from a single good lead page,Prevents huge pages from dominating. Typical: 30000-50000.,Updated Every Run,Good Leads Reference,Step 2 Tab
+step4.good_leads_aggregate_char_cap,Maximum total text per good lead website across all pages,Total cap per good lead site. Typical: 120000.,Updated Every Run,Good Leads Reference,Step 2 Tab
+step4.good_leads_summarization_prompt,AI prompt for summarizing good lead websites,Instructions for AI to analyze and summarize good lead websites before scoring. One API call for all.,Updated Every Run,Good Leads Reference,Step 2 Tab
+step4.good_leads_max_summary_chars,Maximum characters for the combined good leads summary,Max chars for AI-generated summary of all good leads. Typical: 5000-10000.,Updated Every Run,Good Leads Reference,Step 2 Tab
+step1.api_choice,Search API provider - Serper.dev or SerpAPI,Which search service to use. Both search Google. Serper is cheaper.,Updated for Complex Runs,Discovery Settings,Advanced Tab
+step1.api_key,API key for the search service (Serper or SerpAPI),Your API key from serper.dev or serpapi.com,Updated for Complex Runs,Discovery Settings,Advanced Tab
+step1.region,Geographic region code for search results,2-letter country code: 'us' for USA 'gb' for UK 'de' for Germany etc.,Updated for Complex Runs,Discovery Settings,Advanced Tab
+step1.max_results,Maximum websites to get from each search query,How many results per search. Typical: 50-100. More = thorough but slower/costlier.,Updated for Complex Runs,Discovery Settings,Advanced Tab
+step1.serper_combo_cap,Total limit on keyword combinations to search,Prevents runaway costs with many keyword boxes. Typical: 100-500.,Updated for Complex Runs,Discovery Settings,Advanced Tab
+step1.verify_domains,Whether to verify discovered domains via HEAD requests,Check each website actually exists before processing. Adds time but removes dead links. Keep ON.,Updated for Complex Runs,Discovery Settings,Advanced Tab
+step1.reanalysis_period,Days before re-analyzing previously seen domains,Skip websites analyzed within this many days. 0 = analyze everything fresh. 30 = skip if seen in last month.,Updated for Complex Runs,Discovery Settings,Advanced Tab
+step2.max_pages_per_site,Maximum pages to crawl per website,How many pages to visit on each site. Typical: 8-15. More for complex sites.,Updated for Complex Runs,Scraping Settings,Advanced Tab
+step2.max_depth,Maximum link depth to follow from homepage,How many clicks deep from homepage. 1 = homepage + direct links. 2 = those + their links. Typical: 2.,Updated for Complex Runs,Scraping Settings,Advanced Tab
+step2.aggregate_char_cap,Maximum total text to collect per website (all pages combined),Total characters from all pages combined. Typical: 80000-150000.,Updated for Complex Runs,Scraping Settings,Advanced Tab
+step2.contact_priority_keywords,Keywords that prioritize pages for crawling,Page names to prioritize - these often have contact info. Default is good.,Updated for Complex Runs,Scraping Settings,Advanced Tab
+step3.use_score_threshold,Enable score-based threshold filtering,Check to filter leads by minimum score,Updated for Complex Runs,Scoring Thresholds,Advanced Tab
+step3.threshold_value,Minimum score (0-100) a lead must have to pass,Score required to advance to AI analysis. Typical: 50-80. Higher = stricter; fewer leads.,Updated for Complex Runs,Scoring Thresholds,Advanced Tab
+step3.use_percentage_threshold,Enable top-percentage threshold filtering,Check to keep only the top X% of leads by score,Updated for Complex Runs,Scoring Thresholds,Advanced Tab
+step3.percentage_value,What percentage of leads to keep,Top percentage to keep (e.g. 20 = top 20%). Typical: 10-30%.,Updated for Complex Runs,Scoring Thresholds,Advanced Tab
+step3.use_count_threshold,Enable top-N count threshold filtering,Check to keep only the top N leads by score,Updated for Complex Runs,Scoring Thresholds,Advanced Tab
+step3.count_value,Exact number of leads to keep,Specific number of top leads to keep. Match to your AI budget.,Updated for Complex Runs,Scoring Thresholds,Advanced Tab
+step3.fuzzy_match_threshold,How exact keyword matches must be (0-100),100 = exact matches only. 85 = allows typos/variations. Typical: 80-90.,Updated for Complex Runs,Scoring Thresholds,Advanced Tab
+step3.positive_factors[].name,Label for this positive scoring factor,Descriptive name like 'Industry Match' or 'Size Fit',Updated for Complex Runs,Positive Scoring Factors,Advanced Tab
+step3.positive_factors[].weight,Importance multiplier for this factor,100 = normal importance. 200 = twice as important. 50 = half as important.,Updated for Complex Runs,Positive Scoring Factors,Advanced Tab
+step3.positive_factors[].sensitivity,How many keyword matches needed for full credit,1 = one match gives full points. 3 = need 3+ matches for full points.,Updated for Complex Runs,Positive Scoring Factors,Advanced Tab
+step3.positive_factors[].keywords,Words/phrases that indicate a good lead for this factor,Comma-separated keywords that add points when found,Updated for Complex Runs,Positive Scoring Factors,Advanced Tab
+step3.negative_factors[].name,Label for this negative/disqualifier factor,Descriptive name like 'Competitor' or 'Wrong Industry',Updated for Complex Runs,Negative Scoring Factors,Advanced Tab
+step3.negative_factors[].weight,Importance multiplier for this disqualifier,100 = normal penalty. Higher = bigger penalty when found.,Updated for Complex Runs,Negative Scoring Factors,Advanced Tab
+step3.negative_factors[].sensitivity,How many keyword matches needed for full penalty,1 = one match gives full penalty. 3 = need 3+ matches for full penalty.,Updated for Complex Runs,Negative Scoring Factors,Advanced Tab
+step3.negative_factors[].keywords,Words/phrases that indicate a bad lead,Comma-separated keywords that subtract points when found,Updated for Complex Runs,Negative Scoring Factors,Advanced Tab
+step5.enabled,Whether to run contact extraction step,Turn OFF if you only need company-level info without individual contacts.,Updated for Complex Runs,Contact Extraction,Advanced Tab
+step5.max_contacts,Maximum contacts to extract per company,How many people to extract from each lead. Typical: 3-5.,Updated for Complex Runs,Contact Extraction,Advanced Tab
+step5.contact_extraction_prompt,AI prompt for extracting contact information,Instructions for AI on how to find and extract contact details,Updated for Complex Runs,Contact Extraction,Advanced Tab
+step5.seniority_4_titles,Job titles indicating highest seniority (score 4),Comma-separated titles like CEO; Founder; President; Owner,Updated for Complex Runs,Contact Scoring Keywords,Advanced Tab
+step5.seniority_3_titles,Job titles indicating high seniority (score 3),Comma-separated titles like VP; CSO; CTO; CMO; Head of,Updated for Complex Runs,Contact Scoring Keywords,Advanced Tab
+step5.seniority_2_titles,Job titles indicating medium seniority (score 2),Comma-separated titles like Director; Senior Scientist; Lead,Updated for Complex Runs,Contact Scoring Keywords,Advanced Tab
+step5.seniority_1_titles,Job titles indicating lower seniority (score 1),Comma-separated titles like Manager; Analyst; Coordinator,Updated for Complex Runs,Contact Scoring Keywords,Advanced Tab
+step5.fit_4_titles,Job titles indicating excellent relevance fit (score 4),Comma-separated titles highly relevant to your target market,Updated for Complex Runs,Contact Scoring Keywords,Advanced Tab
+step5.fit_3_titles,Job titles indicating good relevance fit (score 3),Comma-separated titles with good relevance,Updated for Complex Runs,Contact Scoring Keywords,Advanced Tab
+step5.fit_2_titles,Job titles indicating moderate relevance fit (score 2),Comma-separated titles with moderate relevance,Updated for Complex Runs,Contact Scoring Keywords,Advanced Tab
+step5.fit_1_titles,Job titles indicating lower relevance fit (score 1),Comma-separated titles with lower relevance,Updated for Complex Runs,Contact Scoring Keywords,Advanced Tab
+performance.ai_batch_size,Number of leads to analyze simultaneously with AI,Higher = faster but may hit API rate limits. Typical: 3-10. Start at 5.,Rarely Updated,Performance Settings,Advanced Tab
+performance.rate_limiter_success_threshold,Consecutive successes needed before speeding up rate limiting,Lower = more aggressive speed-up. Typical: 3-7. Default of 5 is safe.,Rarely Updated,Performance Settings,Advanced Tab
+performance.logging_level,Logging verbosity level,none/limited/moderate/detailed. 'moderate' for normal; 'detailed' for debugging.,Rarely Updated,Performance Settings,Advanced Tab
+performance.debug_file_interval,Write a debug file every N AI calls,Useful for troubleshooting. Typical: 10-50. Lower = more files but slower.,Rarely Updated,Performance Settings,Advanced Tab
+performance.always_write_debug_files,Override to write debug file for every AI call,Very slow; only enable when troubleshooting specific issues.,Rarely Updated,Performance Settings,Advanced Tab
+performance.fuzzy_match_threshold,Global fuzzy matching threshold for performance,100 = exact matches only (fastest). 85-90 typical.,Rarely Updated,Performance Settings,Advanced Tab
+csv_output.delimiter,Character separating multiple values in a CSV cell,';' is safest. Avoid ',' as it conflicts with CSV format.,Rarely Updated,Performance Settings,Advanced Tab
+github_auto_sync,Automatically commit config changes to git on save,Only enable if you use git for version control.,Rarely Updated,GitHub Sync,Advanced Tab
+step1.rate_limit_initial,Starting delay (seconds) between search API calls,Initial pause between requests. Typical: 0.2-0.5.,Rarely Updated,Discovery Rate Limiting,Advanced Tab
+step1.rate_limit_min,Minimum/fastest allowed delay between requests,System won't go faster than this. Typical: 0.05-0.1. Too low causes rate limits.,Rarely Updated,Discovery Rate Limiting,Advanced Tab
+step1.rate_limit_max,Maximum/slowest delay when errors occur,Slowdown limit when hitting errors. Typical: 2-5 seconds.,Rarely Updated,Discovery Rate Limiting,Advanced Tab
+step1.request_timeout_seconds,How long to wait for search API response before giving up,Timeout for search requests. Typical: 10-20 seconds.,Rarely Updated,Discovery Rate Limiting,Advanced Tab
+step1.concurrency,Number of parallel domain verification requests,Simultaneous checks. Typical: 15-30. Higher = faster but may overwhelm network.,Rarely Updated,Discovery Rate Limiting,Advanced Tab
+step2.global_concurrency,Total simultaneous page requests across all websites,Total parallel requests. Typical: 30-80. Higher = faster but uses more memory.,Rarely Updated,Scraping Performance,Advanced Tab
+step2.per_domain_concurrency,Simultaneous requests to a single website,Requests per site. Typical: 3-8. Too high may get you blocked.,Rarely Updated,Scraping Performance,Advanced Tab
+step2.timeout_sec,How long to wait for a page to load,Page timeout. Typical: 15-30. Slow sites may need more.,Rarely Updated,Scraping Performance,Advanced Tab
+step2.max_chars_per_page,Maximum text to extract from a single page,Prevents huge pages from dominating. Typical: 30000-50000.,Rarely Updated,Scraping Performance,Advanced Tab
+step2.max_chars_per_scrape,Absolute maximum text per website across all pages,Total cap per site. Typical: 150000-300000.,Rarely Updated,Scraping Performance,Advanced Tab
+step2.read_limit_bytes,Maximum HTML bytes to download per page,Prevents downloading huge files. Typical: 1-3 million bytes.,Rarely Updated,Scraping Performance,Advanced Tab
+step2.min_chars_per_page,Minimum text for a page to be included,Pages with less are skipped (likely empty/error). Typical: 200-500.,Rarely Updated,Scraping Performance,Advanced Tab
+step2.robots_cache_ttl_sec,How long to cache robots.txt rules (seconds),Cache duration. Typical: 3600 (1 hour). Rarely needs changing.,Rarely Updated,Scraping Performance,Advanced Tab
+step2.respect_robots,Whether to obey robots.txt crawling rules,Follow site's rules. Keep ON to be a good internet citizen.,Rarely Updated,Scraping Performance,Advanced Tab
+step2.follow_sitemaps,Whether to parse and follow sitemap.xml,Check sitemaps to find important pages. Keep ON for better coverage.,Rarely Updated,Scraping Performance,Advanced Tab
+step2.user_agent,HTTP User-Agent string identifying the scraper to websites,How scraper identifies itself. Default is fine. Change if sites block you.,Rarely Updated,Scraping Performance,Advanced Tab
+step4.company_description_prompt,Custom instructions for how AI describes companies,Leave empty for default. Only customize if default descriptions don't fit needs.,Rarely Updated,AI Technical Settings,Advanced Tab
+step4.max_tokens,Maximum length of AI response in tokens,Response length limit. Typical: 2000-4000. More fields need more tokens.,Rarely Updated,AI Technical Settings,Advanced Tab
+step4.max_retries,How many times to retry a failed AI call,Retry count. Typical: 2-4.,Rarely Updated,AI Technical Settings,Advanced Tab
+step4.batch_size,Leads processed before saving a checkpoint,Checkpoint frequency. Typical: 5-10.,Rarely Updated,AI Technical Settings,Advanced Tab
+step4.checkpoint_interval,Save progress every N leads processed,Progress save interval. Typical: 5-10. Lower = safer but slower.,Rarely Updated,AI Technical Settings,Advanced Tab
+step4.log_level,Detail level for AI module logs,DEBUG/INFO/WARNING/ERROR. 'INFO' for normal; 'DEBUG' for troubleshooting.,Rarely Updated,AI Technical Settings,Advanced Tab
+step4.claude_models[],Claude model definitions - name and API ID and cost,Update when Anthropic releases new models. Format: name; api_id; cost_per_1k,Rarely Updated,Model Configuration,Advanced Tab
+step4.openai_models[],OpenAI model definitions - name and API ID and cost,Update when OpenAI releases new models. Format: name; api_id; cost_per_1k,Rarely Updated,Model Configuration,Advanced Tab
+step4.gemini_models[],Gemini model definitions - name and API ID and cost,Update when Google releases new models. Format: name; api_id; cost_per_1k,Rarely Updated,Model Configuration,Advanced Tab
+master_csv_path,File path where main output CSV is saved,Path to master leads file. Edit in unified_config.json only.,Cannot Update from GUI,File Paths,Config File Only
+step1.output_path,File path where raw discovery results are saved,Path to raw discovery output. Edit in unified_config.json only.,Cannot Update from GUI,File Paths,Config File Only
+step2.db_path,File path where crawl database is stored,Path to SQLite crawl database. Edit in unified_config.json only.,Cannot Update from GUI,File Paths,Config File Only
+step3.output_path,File path where scoring results are saved,Path to scoring results. Edit in unified_config.json only.,Cannot Update from GUI,File Paths,Config File Only
+step4.results_file,File path where AI analysis results are saved,Path to AI analysis output. Edit in unified_config.json only.,Cannot Update from GUI,File Paths,Config File Only
+step4.max_content_chars,Maximum characters sent to AI per lead,Affects cost and quality. Edit in unified_config.json only.,Cannot Update from GUI,AI Limits,Config File Only
+step4.skip_if_processed_within_days,Skip re-analyzing leads processed within this many days,Avoids duplicate AI costs. Edit in unified_config.json only.,Cannot Update from GUI,AI Limits,Config File Only
+step4.async_batch_size,Async batch size for AI calls (mirrors ai_batch_size),Internal setting. Edit in unified_config.json only.,Cannot Update from GUI,AI Limits,Config File Only
+csv_output.sanitize_commas,Replace commas with semicolons in text content,Prevents CSV parsing issues. Edit in unified_config.json only.,Cannot Update from GUI,CSV Output,Config File Only
+csv_output.include_failed_domains,Include failed domains at bottom of output CSV,Shows which domains couldn't be processed. Edit in unified_config.json only.,Cannot Update from GUI,CSV Output,Config File Only
+csv_output.include_debug_columns,Add extra debugging columns to output,Extra diagnostic info. Edit in unified_config.json only.,Cannot Update from GUI,CSV Output,Config File Only
+csv_output.column_order,Order and visibility of columns in output CSV,Column positions (0 = hidden). Edit in unified_config.json only.,Cannot Update from GUI,CSV Output,Config File Only
+step1.record_failed_domains,Track domains that failed verification,Record failures for debugging. Edit in unified_config.json only.,Cannot Update from GUI,Discovery Internals,Config File Only
+step1.serper_set_keywords,Legacy fixed keywords for Serper searches,Old format - use keyword_boxes instead. Edit in unified_config.json only.,Cannot Update from GUI,Discovery Internals,Config File Only
+step1.serper_variable_keywords,Legacy variable keywords for Serper searches,Old format - use keyword_boxes instead. Edit in unified_config.json only.,Cannot Update from GUI,Discovery Internals,Config File Only
+step1.serper_max_terms,Maximum terms per search query,Query length limit. Edit in unified_config.json only.,Cannot Update from GUI,Discovery Internals,Config File Only
+step1.serper_current_seed,Current random seed for reproducibility,Used for consistent random selections. Edit in unified_config.json only.,Cannot Update from GUI,Discovery Internals,Config File Only
+step1.serper_last_seed,Previous run's random seed,Tracking for reproducibility. Edit in unified_config.json only.,Cannot Update from GUI,Discovery Internals,Config File Only
+step5.contact_scoring_prompt,Full AI prompt for scoring extracted contacts,Detailed scoring instructions. Edit in unified_config.json only.,Cannot Update from GUI,Contact Extraction,Config File Only
+

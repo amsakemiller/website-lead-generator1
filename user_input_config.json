@@ -1,0 +1,223 @@
+{
+  "version": "1.0",
+  "single_prompt_mode": {
+    "button_text": "Answer One Prompt Instead",
+    "description": "Describe your business and ideal customers in your own words. A complete answer includes: what you sell, who buys it (industry, size, geography), who doesn't buy it, example customers, and who you sell to (titles).",
+    "placeholder": "Tell us everything about your ideal customer...",
+    "example": {
+      "title": "Example of a great answer:",
+      "content": "**BoxFlow** (boxflow.io) sells warehouse management software to mid-size e-commerce companies in the US. Deals range $30K-$150K/year.\n\n**Ideal customer:** $5M-$100M revenue, 50-500 employees, ships 1000+ orders/day, currently using spreadsheets or outdated WMS. Recently raised funding or opened new warehouse = strong buying signal.\n\n**Sell to:** VP/Director of Operations, Logistics, or Supply Chain. Sometimes COO at smaller companies.\n\n**Don't sell to:** 3PLs (competitors' customers), companies already on SAP/Oracle, companies under $3M revenue, outside US.\n\n**Current customers:** acme-shipping.com, fastfulfill.io, boxbrand.com\n\n**Search terms by category:**\n- Industry: e-commerce, DTC brand, online retail, Shopify seller\n- Problem: fulfillment challenges, warehouse inefficiency, inventory management\n- Stage: Series A, growing, scaling, hiring warehouse staff\n- Tech: WMS, 3PL alternative, ShipStation, fulfillment software"
+    }
+  },
+  "guided_mode": {
+    "sections": [
+      {
+        "id": "identity",
+        "title": "Business Identity",
+        "fields": [
+          {
+            "id": "business_name",
+            "label": "Business Name",
+            "type": "text",
+            "required": true,
+            "placeholder": "Your company name",
+            "subtext": null,
+            "config_key": "user_inputs.business_name"
+          },
+          {
+            "id": "website_url",
+            "label": "Website URL",
+            "type": "text",
+            "required": true,
+            "placeholder": "https://yourcompany.com",
+            "subtext": "We'll scrape this for additional context",
+            "config_key": "user_inputs.website_url"
+          }
+        ]
+      },
+      {
+        "id": "offering",
+        "title": "What You Sell",
+        "fields": [
+          {
+            "id": "product_description",
+            "label": "What do you sell?",
+            "type": "text",
+            "required": true,
+            "placeholder": "Describe your product or service in 1-2 sentences",
+            "subtext": "e.g., \"B2B SaaS for inventory management\", \"Executive recruiting for tech companies\", \"Industrial equipment maintenance services\"",
+            "config_key": "user_inputs.product_description"
+          },
+          {
+            "id": "price_range",
+            "label": "Price range per deal",
+            "type": "range",
+            "required": false,
+            "fields": {
+              "min": {
+                "placeholder": "Min $",
+                "config_key": "user_inputs.price_min"
+              },
+              "max": {
+                "placeholder": "Max $",
+                "config_key": "user_inputs.price_max"
+              }
+            },
+            "subtext": "Leave blank if highly variable"
+          }
+        ]
+      },
+      {
+        "id": "icp",
+        "title": "Ideal Customer",
+        "fields": [
+          {
+            "id": "ideal_customer",
+            "label": "Describe your ideal customer",
+            "type": "textarea",
+            "required": true,
+            "placeholder": "Who is the perfect fit for what you sell?",
+            "subtext": "e.g., \"Mid-size e-commerce companies struggling with warehouse efficiency\" or \"Series A+ startups needing to scale their engineering team\"",
+            "config_key": "user_inputs.ideal_customer"
+          },
+          {
+            "id": "company_size",
+            "label": "Target company size",
+            "type": "text",
+            "required": false,
+            "placeholder": "Size requirements or preferences",
+            "subtext": "e.g., employee count (50-500), revenue ($5M-$100M), funding stage (Series A+), or \"Fortune 500 only\"",
+            "config_key": "user_inputs.company_size"
+          },
+          {
+            "id": "geography",
+            "label": "Geographic requirements",
+            "type": "text",
+            "required": false,
+            "placeholder": "Where must your customers be located?",
+            "subtext": "e.g., \"US only\", \"English-speaking countries\", \"Must have EU operations\", \"No restrictions\"",
+            "config_key": "user_inputs.geography"
+          }
+        ]
+      },
+      {
+        "id": "contacts",
+        "title": "Decision Makers",
+        "fields": [
+          {
+            "id": "seniority_levels",
+            "label": "Seniority levels that can buy",
+            "type": "text",
+            "required": false,
+            "placeholder": "What title levels make purchasing decisions?",
+            "subtext": "e.g., CEO, VP, Director, Manager, Head of, C-Suite, Senior",
+            "config_key": "user_inputs.seniority_levels"
+          },
+          {
+            "id": "departments",
+            "label": "Departments you sell to",
+            "type": "text",
+            "required": false,
+            "placeholder": "What functions or departments?",
+            "subtext": "e.g., IT, Marketing, Operations, Finance, HR, Engineering, Sales, Procurement, Legal",
+            "config_key": "user_inputs.departments"
+          }
+        ]
+      },
+      {
+        "id": "exclusions",
+        "title": "Exclusions",
+        "fields": [
+          {
+            "id": "exclusions",
+            "label": "Who should we exclude?",
+            "type": "textarea",
+            "required": false,
+            "placeholder": "Industries, company types, competitors, or other exclusions",
+            "subtext": "e.g., \"Agencies\", \"Government\", \"Companies under $1M revenue\", \"Competitors: Acme Corp, Beta Inc\"",
+            "config_key": "user_inputs.exclusions"
+          }
+        ]
+      },
+      {
+        "id": "examples",
+        "title": "Examples & Context",
+        "fields": [
+          {
+            "id": "good_leads",
+            "label": "Example customers (URLs)",
+            "type": "textarea",
+            "required": false,
+            "placeholder": "Paste 3-10 URLs of ideal customers, separated by commas or new lines",
+            "subtext": "Current customers, past customers, or companies you wish were customers",
+            "config_key": "user_inputs.good_leads"
+          },
+          {
+            "id": "search_keywords",
+            "label": "Search terms that work",
+            "type": "textarea",
+            "required": false,
+            "placeholder": "Keywords organized by category",
+            "subtext": "Group by type: Industry terms, Problem terms, Stage/size terms, Technology terms. One term from each group combines into searches.",
+            "config_key": "user_inputs.search_keywords"
+          },
+          {
+            "id": "other_context",
+            "label": "Anything else?",
+            "type": "textarea",
+            "required": false,
+            "placeholder": "Buying signals, timing indicators, or other helpful context",
+            "subtext": "e.g., \"Recently raised funding = strong signal\", \"Hiring for X role = good timing\"",
+            "config_key": "user_inputs.other_context"
+          }
+        ]
+      },
+      {
+        "id": "preferences",
+        "title": "Preferences",
+        "fields": [
+          {
+            "id": "extract_contacts",
+            "label": "Extract individual contacts?",
+            "type": "toggle",
+            "required": false,
+            "default": false,
+            "subtext": "Find names, titles, and emails of people at each company",
+            "config_key": "user_inputs.extract_contacts",
+            "shows_when_true": []
+          }
+        ]
+      }
+    ]
+  },
+  "search_term_guidance": {
+    "description": "Organize keywords into categories. The system picks one term from each non-empty category and combines them into search queries.",
+    "categories": [
+      {
+        "name": "Industry/Vertical",
+        "description": "What industry are your customers in?",
+        "examples": ["e-commerce", "healthcare", "fintech", "manufacturing", "SaaS", "retail", "logistics"]
+      },
+      {
+        "name": "Product/Problem",
+        "description": "What product do they have or problem do they face?",
+        "examples": ["inventory management", "hiring challenges", "data security", "customer churn", "manual processes"]
+      },
+      {
+        "name": "Company Stage/Size",
+        "description": "What stage or size signals a good fit?",
+        "examples": ["Series A", "growing", "scaling", "enterprise", "startup", "mid-market", "Fortune 500"]
+      },
+      {
+        "name": "Technology/Tools",
+        "description": "What technology or tools do they use?",
+        "examples": ["Salesforce", "Shopify", "AWS", "SAP", "legacy systems", "spreadsheets"]
+      },
+      {
+        "name": "Activity/Behavior",
+        "description": "What are they doing that signals buying intent?",
+        "examples": ["hiring", "expanding", "raised funding", "opening new location", "digital transformation"]
+      }
+    ]
+  }
+}
