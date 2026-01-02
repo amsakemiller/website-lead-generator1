@@ -549,35 +549,39 @@ Be specific, strategic, and thorough. Your configuration directly determines lea
             },
             
             # Step 1: Website Discovery
+            # OPTIMIZED FOR 2500 SERPER CREDITS: 5×5×5×5×4 = 2500 combinations
             "step1": {
                 "api_choice": "serper",
-                "api_key": "",
+                "api_key": "",  # User must enter Serper.dev API key
                 "region": "us",
                 "max_results": 100,
                 "output_path": "data/leads_raw.csv",
                 "request_timeout_seconds": 15,
                 "concurrency": 25,
-                "verify_domains": True,  # Can be disabled to skip domain verification
-                "record_failed_domains": True,  # Record failed domain verifications
+                "verify_domains": True,
+                "record_failed_domains": True,
                 "rate_limit_initial": 0.35,
                 "rate_limit_min": 0.05,
                 "rate_limit_max": 2.0,
                 "keyword_boxes": [
-                    "medical device",
-                    "oncology, tumor, cancer",
-                    "therapeutic, preclinical",
-                    "ablation, interventional",
-                    "drug delivery, implantable",
-                    "solid tumor, localized",
-                    "nanoparticle, photothermal, radiofrequency",
-                    "bile duct, bladder, brain, glioma, colorectal, kidney, liver, lung, pancreas, soft tissue"
+                    # Box 1: Core offering type (5 terms)
+                    "medical device, interventional device, therapeutic device, ablation device, drug delivery device",
+                    # Box 2: Cancer focus (5 terms)
+                    "oncology, cancer treatment, tumor ablation, solid tumor, cancer therapy",
+                    # Box 3: Development stage (5 terms)
+                    "preclinical, pre-clinical, translational research, early stage development, R&D stage",
+                    # Box 4: Treatment modality (5 terms)
+                    "ablation, embolization, minimally invasive, catheter-based, interventional radiology",
+                    # Box 5: Target organs (4 terms - rotates through key organs)
+                    "liver tumor, lung cancer device, pancreatic cancer, kidney tumor"
                 ],
-                "serper_set_keywords": "medical device",
-                "serper_variable_keywords": "oncology, tumor, device, therapeutic, preclinical, ablation, interventional, drug delivery, implantable, solid tumor, localized, cancer, therapy, nanoparticle, photothermal, radiofrequency, bile duct, bladder, brain, glioma, colorectal, kidney, liver, lung, pancreas, soft tissue chemoembolization, ultrasound, translational, oncology biotech",
-                "serper_combo_cap": 500,
+                "serper_set_keywords": "medical device cancer",
+                "serper_variable_keywords": "oncology, tumor, ablation, interventional, preclinical, solid tumor, liver, lung, pancreas, kidney, bile duct, bladder, brain, glioma, colorectal, soft tissue, catheter, embolization, microsphere, radiofrequency, thermal ablation, cryoablation, drug delivery",
+                "serper_combo_cap": 2500,
                 "serper_max_terms": 8,
                 "serper_current_seed": None,
-                "serper_last_seed": None
+                "serper_last_seed": None,
+                "reanalysis_period": 0  # 0 = analyze all new leads fresh
             },
             
             # Step 2: Website Scraping
@@ -602,40 +606,46 @@ Be specific, strategic, and thorough. Your configuration directly determines lea
             },
             
             # Step 3: Factor-based Scoring
+            # OPTIMIZED: Keywords extracted from scraped good leads content
             "step3": {
-                "score_threshold": 75,
+                "score_threshold": 60,
                 "output_path": "data/analysis_results.csv",
-                "threshold_type": "score",  # score, percentage, count
-                "threshold_value": "75",
-                # Multi-select thresholds (OR logic) - if any is met, lead passes
+                "threshold_type": "score",
+                "threshold_value": "60",
                 "use_score_threshold": True,
                 "use_percentage_threshold": False,
                 "use_count_threshold": False,
                 "percentage_value": 20,
                 "count_value": 100,
                 "fuzzy_match_threshold": 85,
-                # Positive scoring factors (keywords that add points)
+                # Positive scoring factors - HIGH WEIGHT for US location (critical requirement)
                 "positive_factors": [
-                    {"name": "Industry Match", "weight": 200, "sensitivity": 2, "keywords": ""},
-                    {"name": "Size Fit", "weight": 150, "sensitivity": 2, "keywords": ""},
-                    {"name": "Buying Signals", "weight": 100, "sensitivity": 1, "keywords": ""}
+                    {"name": "US Location", "weight": 500, "sensitivity": 1, "keywords": "usa, united states, us-based, boston, san francisco, new york, california, texas, massachusetts, pennsylvania, new jersey, chicago, houston, philadelphia, austin, denver, seattle, miami, headquarters in the us, based in the us"},
+                    {"name": "Cancer/Oncology Focus", "weight": 300, "sensitivity": 2, "keywords": "oncology, cancer, tumor, tumour, solid tumor, malignant, carcinoma, neoplasm, metastatic, ablation therapy, cancer treatment"},
+                    {"name": "Target Organs", "weight": 250, "sensitivity": 2, "keywords": "liver, hepatic, lung, pulmonary, pancreas, pancreatic, kidney, renal, bladder, bile duct, biliary, brain, glioma, colorectal, colon, soft tissue, sarcoma"},
+                    {"name": "Medical Device", "weight": 200, "sensitivity": 2, "keywords": "medical device, device, catheter, implant, ablation, interventional, minimally invasive, endoscopic, drug delivery, microsphere, radiofrequency, rf ablation, microwave, thermal, cryoablation, embolization, electroporation"},
+                    {"name": "Preclinical Stage", "weight": 300, "sensitivity": 1, "keywords": "preclinical, pre-clinical, translational, early stage, r&d, research and development, proof of concept, animal study, in vivo, in vitro, laboratory research"},
+                    {"name": "Funding Signals", "weight": 150, "sensitivity": 2, "keywords": "series a, series b, series c, funding, raised, investment, venture, grant, nih, sbir, sttr, cprit, capital, investors"}
                 ],
-                "positive_factor_count": 3,
-                # Negative scoring factors (keywords that subtract points)
+                "positive_factor_count": 6,
+                # Negative scoring factors - penalize non-fits
                 "negative_factors": [
-                    {"name": "Wrong Industry", "weight": 200, "sensitivity": 1, "keywords": ""},
-                    {"name": "Competitors", "weight": 300, "sensitivity": 1, "keywords": ""}
+                    {"name": "Liquid/Blood Cancers", "weight": 400, "sensitivity": 1, "keywords": "bone marrow, leukemia, lymphoma, myeloma, hematologic, liquid cancer, blood cancer"},
+                    {"name": "Already FDA Approved", "weight": 300, "sensitivity": 1, "keywords": "fda approved, fda-approved, fda cleared, fda-cleared, 510k cleared, commercially available, on market, market leader"},
+                    {"name": "Late Clinical Stage", "weight": 200, "sensitivity": 2, "keywords": "phase iii, phase 3, phase ii, phase 2, pivotal trial, registration trial, nda, pma approved"}
                 ],
-                "negative_factor_count": 2
+                "negative_factor_count": 3
             },
             
             # Step 4: AI Analysis
+            # CONFIGURED: Haiku 3.5 for cost-effective analysis
             "step4": {
-                "model_choice": "model_1",  # model_1, model_2, model_3, model_4
-                "api_provider": "claude",   # claude, openai, gemini
-                "api_key": "",
-                "gemini_api_key": "",  # Separate key for Gemini
-                "model": "claude-sonnet-4-20250514",
+                "model_choice": "model_1",  # model_1 = Haiku 3.5 (cheapest/fastest)
+                "api_provider": "claude",
+                "provider_choice": "claude",
+                "api_key": "",  # User enters Claude API key
+                "gemini_api_key": "",
+                "model": "claude-3-5-haiku-20241022",
                 # Claude models (4 options) - cost_per_1k = estimated $ per 1,000 leads analyzed
                 "claude_models": [
                     {"name": "Haiku 3.5", "api_id": "claude-3-5-haiku-20241022", "cost_per_1k": 8.40},
@@ -657,8 +667,8 @@ Be specific, strategic, and thorough. Your configuration directly determines lea
                     {"name": "Pro 2.5", "api_id": "gemini-2.5-pro-preview-05-06", "cost_per_1k": 25.00},
                     {"name": "Pro 1.5", "api_id": "gemini-1.5-pro", "cost_per_1k": 17.50}
                 ],
-                "max_tokens": 4000,
-                "credit_limit": 50.0,
+                "max_tokens": 2000,  # Reduced for Haiku - more efficient
+                "credit_limit": 30.0,  # ~$25-30 for 2500 websites with Haiku 3.5
                 "max_retries": 3,
                 "log_level": "INFO",
                 "batch_size": 5,
@@ -666,8 +676,8 @@ Be specific, strategic, and thorough. Your configuration directly determines lea
                 "results_file": "data/ai_analysis_results.csv",
                 "custom_explanation": "",
                 "company_description_prompt": "",
-                # Good leads reference configuration
-                "good_leads_domains": "",  # Comma-separated list of domains to scrape as good examples
+                # Good leads reference configuration - CONFIGURED with optimal subset
+                "good_leads_domains": "https://www.jnj.com, https://usa.guerbet.com, https://abkbiomedical.com, https://www.bd.com, https://www.earli.com, https://trisaluslifesci.com, https://www.aurabiosciences.com, https://betaglue.com, https://www.bostonscientific.com, https://mirai-medical.com, https://www.pranasurgical.com, https://www.stryker.com, https://rakuten-med.com/us, https://www.imchecktherapeutics.com, https://www.engagebio.com",
                 "good_leads_max_pages_per_site": 12,  # Max pages to crawl per good lead site
                 "good_leads_max_depth": 2,  # Max crawl depth for good lead sites
                 "good_leads_max_chars_per_page": 50000,  # Max chars per page for good leads
@@ -677,13 +687,14 @@ Be specific, strategic, and thorough. Your configuration directly determines lea
                 "good_leads_summary_cache": "",  # Cached summary from last run
                 # Performance settings
                 "async_batch_size": 5,  # Number of parallel AI requests
-                "max_content_chars": 12000,  # Max chars to send to AI per company
-                "skip_if_processed_within_days": 30,  # Skip reprocessing if done within N days (0=always process)
+                "max_content_chars": 10000,  # Max chars to send to AI per company - optimized for Haiku
+                "skip_if_processed_within_days": 0,  # Always process fresh (0=always process)
                 "scoring_field_count": 20,  # Number of scoring fields to show
                 # Multi-score fields (configurable count)
                 # Each field is either "score" type or "text" type
                 # Score: {type: "score", title: str, min: int, max: int, prompt: str, enabled: bool}
                 # Text: {type: "text", title: str, allow_unlisted: bool, allow_multiple: bool, prompt: str, options: [str], enabled: bool}
+                # SCORING FIELDS - User's optimized prompts for preclinical cancer device leads
                 "scoring_fields": [
                     {
                         "type": "score",
@@ -695,10 +706,36 @@ Be specific, strategic, and thorough. Your configuration directly determines lea
                     },
                     {
                         "type": "score",
-                        "title": "Well-Funded",
+                        "title": "Funding Status",
                         "min": 0,
                         "max": 10,
                         "prompt": "Assign a funding score from 0-10. Consider: recent funding rounds (Series A/B/C); grant awards; products already in market; partnerships with major companies; significant hiring; professional website quality. Score 0 if business appears defunct or unfunded. Score 1-3 for early-stage with minimal funding evidence. Score 4-6 for moderate funding indicators. Score 7-10 for well-funded companies with clear evidence of substantial capital.",
+                        "enabled": True
+                    },
+                    {
+                        "type": "text",
+                        "title": "Organs",
+                        "allow_unlisted": True,
+                        "allow_multiple": True,
+                        "prompt": "Identify which organs or body systems this company's products/services target. Select all that apply.",
+                        "options": ["Liver", "Pancreas", "Lung", "Brain/CNS", "Kidney", "Bladder", "Bile Duct", "Colorectal", "Soft Tissue", "Heart", "GI Tract", "Skin", "Bone/Musculoskeletal", "Blood/Hematology", "Other"],
+                        "enabled": True
+                    },
+                    {
+                        "type": "score",
+                        "title": "Pre-Clinical Status",
+                        "min": 0,
+                        "max": 3,
+                        "prompt": "Assess the company's product development stage. Score 0 if no clear product is in development, or if all products are already FDA-Approved. Score 1 for clinical trials. Score 2 for early product development and R&D. Score 3 for preclinical development (ideal for large animal testing). The score should reflect the highest score of all products in development. So, if one product is phase III but another is in preclinical development, assign a score of 3.",
+                        "enabled": True
+                    },
+                    {
+                        "type": "text",
+                        "title": "Type of Cancer",
+                        "allow_unlisted": True,
+                        "allow_multiple": True,
+                        "prompt": "Identify the type of cancer products from this company focus on.",
+                        "options": ["Solid Tumor", "Bone Marrow/Myeloma Cancer", "Liquid/Hematologic Cancers", "Not Cancer Focused", "Other"],
                         "enabled": True
                     },
                     {
@@ -707,49 +744,15 @@ Be specific, strategic, and thorough. Your configuration directly determines lea
                         "allow_unlisted": True,
                         "allow_multiple": False,
                         "prompt": "Categorize this business into one primary type based on their core offering.",
-                        "options": ["Medical Device Manufacturer", "CRO (Contract Research Organization)", "Biotech/Pharma", "Consulting/Services", "Academic/Research Institution", "Software/Digital Health", "Diagnostics", "Other Healthcare"],
-                        "enabled": True
-                    },
-                    {
-                        "type": "text",
-                        "title": "Target Organ/System",
-                        "allow_unlisted": True,
-                        "allow_multiple": True,
-                        "prompt": "Identify which organs or body systems this company's products/services target. Select all that apply.",
-                        "options": ["Liver", "Pancreas", "Heart", "Lung", "Brain/CNS", "Kidney", "GI Tract", "Skin", "Bone/Musculoskeletal", "Blood/Hematology"],
-                        "enabled": True
-                    },
-                    {
-                        "type": "score",
-                        "title": "Development Stage",
-                        "min": 0,
-                        "max": 5,
-                        "prompt": "Assess the company's product development stage. Score 0 if no clear product in development. Score 1 for concept/early R&D stage. Score 2 for preclinical development (ideal for large animal testing). Score 3 for early clinical trials (Phase I/II). Score 4 for late clinical trials (Phase III). Score 5 for products already FDA-cleared/approved and on market.",
-                        "enabled": True
-                    },
-                    {
-                        "type": "text",
-                        "title": "Therapeutic Focus",
-                        "allow_unlisted": True,
-                        "allow_multiple": True,
-                        "prompt": "Identify the therapeutic areas this company focuses on.",
-                        "options": ["Oncology/Cancer", "Cardiovascular", "Immunology", "Infectious Disease", "Neurology", "Metabolic/Diabetes", "Rare Disease", "Regenerative Medicine"],
-                        "enabled": True
-                    },
-                    {
-                        "type": "score",
-                        "title": "Preclinical Fit",
-                        "min": 0,
-                        "max": 10,
-                        "prompt": "Score how well this company fits as a prospect for preclinical large animal (porcine) testing services. Consider: Are they at the right development stage (preclinical)? Do they have a medical device that would benefit from pig model testing? Are they well-funded enough to afford preclinical studies? Score 0-3 for poor fit; 4-6 for moderate fit; 7-10 for excellent fit.",
+                        "options": ["Medical Device Manufacturer", "Drug/Device Combination", "Biotech/Pharma", "CRO (Contract Research Organization)", "Diagnostics", "Academic/Research Institution", "Other Healthcare"],
                         "enabled": True
                     },
                     {
                         "type": "score",
                         "title": "Overall Score",
                         "min": 0,
-                        "max": 100,
-                        "prompt": "Provide an overall lead quality score from 0-100. This should reflect the total assessment of this company as a potential customer for preclinical medical device testing services. Consider all factors: US presence; funding level; appropriate development stage (preclinical ideal); oncology/cancer focus; medical device vs pharma. Score 80-100 for ideal leads; 60-79 for strong leads; 40-59 for moderate leads; 20-39 for weak leads; 0-19 for non-fits.",
+                        "max": 10,
+                        "prompt": "Score how well this company fits as a prospect for preclinical large animal (porcine) testing services. Consider: Are they at the right development stage (preclinical)? Do they have a medical device that would benefit from pig model testing? Are they well-funded enough to afford preclinical studies ($200-500K)? Do they treat solid tumors (not liquid cancers)? Are they US-based? Score 0-3 for poor fit; 4-6 for moderate fit; 7-10 for excellent fit.",
                         "enabled": True
                     }
                 ],
@@ -786,14 +789,15 @@ FIT SCORE (1-4) - How relevant is this person for preclinical/translational rese
 NOTE: Most senior people (CEO, Founder, etc.) automatically get highest "fit" score since preclinical teams report to them.""",
                 "max_contacts": 5,
                 # Configurable title keywords for scoring (with synonyms)
-                "seniority_4_titles": "CEO, Founder, Co-Founder, Chairman, President, Owner, Chief Executive Officer, Managing Director, Principal, Proprietor",
-                "seniority_3_titles": "CSO, CTO, CMO, COO, CFO, CBO, Chief Scientific Officer, Chief Technology Officer, Chief Medical Officer, Chief Operating Officer, Vice President, VP, EVP, SVP, Executive Vice President, Senior Vice President, Global Head, Head of, Division Head, Department Head",
-                "seniority_2_titles": "Director, Senior Director, Executive Director, Scientific Advisor, Senior Scientist, Associate Vice President, AVP, Group Director, Regional Director, Lead Scientist, Principal Scientist, Staff Scientist",
-                "seniority_1_titles": "Associate Director, Manager, Senior Manager, Scientist, Principal Investigator, PI, Group Leader, Data Scientist, Research Scientist, Project Lead, Team Lead, Coordinator, Analyst, Specialist, Associate",
-                "fit_4_titles": "Preclinical, Translational, Discovery, CEO, Founder, President, Chief Executive, Principal, Owner, Co-Founder, Chairman",
-                "fit_3_titles": "Scientific, Research, R&D, In Vivo, In Vitro, Laboratory, Lab Director, CSO, CTO, VP Research, Head of Research, Research Director, Science, Innovation",
-                "fit_2_titles": "Oncology, Cancer, Immunology, Drug Development, Medical Affairs, Pharmacology, Clinical Development, Therapeutics, Biopharmaceutical, Life Sciences, Biotech, Healthcare",
-                "fit_1_titles": "Business Development, Operations, Economic, Project Management, Administrative, Finance, Legal, HR, Human Resources, Marketing, Sales, Communications, IT, Information Technology"
+                # CONTACT SCORING - Optimized for preclinical oncology device companies
+                "seniority_4_titles": "CEO, Founder, Co-Founder, Chairman, President, Owner, Chief Executive Officer, Managing Director, Principal",
+                "seniority_3_titles": "CSO, CTO, CMO, COO, Chief Scientific Officer, Chief Technology Officer, Chief Medical Officer, Vice President, VP, EVP, SVP, Head of R&D, Head of Research, Head of Preclinical, Head of Development",
+                "seniority_2_titles": "Director, Senior Director, Executive Director, Scientific Advisor, Senior Scientist, Principal Scientist, Lead Scientist, VP Research, Director of Research, Director of Preclinical",
+                "seniority_1_titles": "Manager, Senior Manager, Scientist, Principal Investigator, Research Scientist, Project Lead, Team Lead, Associate Director",
+                "fit_4_titles": "Preclinical, Translational, Discovery, In Vivo, Animal Studies, CEO, Founder, President, Chief Scientific Officer, CSO, Head of R&D",
+                "fit_3_titles": "Research, R&D, Scientific, Laboratory, Device Development, Product Development, Oncology, Cancer, VP Research, Director Research",
+                "fit_2_titles": "Medical Device, Device Engineering, Regulatory, Clinical Development, Medical Affairs, Biomedical, Engineering",
+                "fit_1_titles": "Business Development, Operations, Project Management, Quality, Manufacturing, Sales, Marketing"
             }
         }
         self.config = self.load_config()
@@ -8002,19 +8006,13 @@ class UnifiedLeadGenGUI:
         notebook.pack(fill='both', expand=True)
         self._notebook = notebook
         
-        # Onboarding Tab (first tab)
-        self.setup_onboarding_tab(notebook)
-        
-        # Step 1 Tab
+        # Tab 1: Step 1 Discovery inputs
         self.setup_step1_tab(notebook)
         
-        # Step 2 Tab: AI Analysis (formerly Step 4)
-        self.setup_step2_tab(notebook)
+        # Tab 2: Step 2 + 3 Combined (AI Analysis + Run Controls)
+        self.setup_step2_and_3_combined_tab(notebook)
         
-        # Step 3 Tab: Run (formerly Control/Run Pipeline)
-        self.setup_step3_tab(notebook)
-        
-        # Advanced Settings Tab
+        # Tab 3: Advanced Settings
         self.setup_advanced_tab(notebook)
         
         # Bottom ribbon with progress bar and Save and Exit button
@@ -8512,6 +8510,277 @@ class UnifiedLeadGenGUI:
             self.keyword_boxes.append(box)
         
         self.keyword_boxes_container.columnconfigure(1, weight=1)
+    
+    def setup_step2_and_3_combined_tab(self, notebook):
+        """Setup Combined Step 2+3 Tab: AI Analysis + Run Controls."""
+        frame = ttk.Frame(notebook)
+        notebook.add(frame, text="Step 2+3: AI & Run")
+        
+        # Store reference to control frame for adding button later
+        self.control_frame = frame
+        
+        # Create a paned window to split AI config (top) and Run controls (bottom)
+        paned = ttk.PanedWindow(frame, orient='vertical')
+        paned.pack(fill='both', expand=True)
+        
+        # ============================================================
+        # TOP SECTION: AI Configuration (scrollable)
+        # ============================================================
+        ai_frame = ttk.Frame(paned)
+        paned.add(ai_frame, weight=3)
+        
+        # Create scrollable canvas for AI config
+        ai_canvas = tk.Canvas(ai_frame, highlightthickness=0)
+        ai_scrollbar = ttk.Scrollbar(ai_frame, orient="vertical", command=ai_canvas.yview)
+        ai_scrollable = ttk.Frame(ai_canvas)
+        
+        ai_scrollable.bind(
+            "<Configure>",
+            lambda e: ai_canvas.configure(scrollregion=ai_canvas.bbox("all"))
+        )
+        
+        ai_canvas.create_window((0, 0), window=ai_scrollable, anchor="nw")
+        ai_canvas.configure(yscrollcommand=ai_scrollbar.set)
+        
+        # Store canvas reference for mousewheel handling
+        self._scrollable_canvases.append(ai_canvas)
+        
+        ai_scrollbar.pack(side="right", fill="y")
+        ai_canvas.pack(side="left", fill="both", expand=True)
+        
+        row = 0
+        
+        # === AI Provider/Model Configuration ===
+        ttk.Label(ai_scrollable, text="AI Configuration", font=('Arial', 12, 'bold')).grid(row=row, column=0, columnspan=6, sticky='w', pady=(0, 10))
+        row += 1
+        
+        # AI Provider selection
+        ttk.Label(ai_scrollable, text="AI Provider:").grid(row=row, column=0, sticky='w')
+        self.ai_provider = tk.StringVar(value=self.config.config["step4"].get("provider_choice", "claude"))
+        ttk.Radiobutton(ai_scrollable, text="Claude", variable=self.ai_provider, value="claude").grid(row=row, column=1, sticky='w')
+        ttk.Radiobutton(ai_scrollable, text="OpenAI", variable=self.ai_provider, value="openai").grid(row=row, column=2, sticky='w')
+        ttk.Radiobutton(ai_scrollable, text="Gemini", variable=self.ai_provider, value="gemini").grid(row=row, column=3, sticky='w')
+        ttk.Label(ai_scrollable, text="(Claude recommended for accuracy)", font=('Arial', 8), foreground='gray').grid(row=row, column=4, sticky='w', padx=5)
+        row += 1
+        
+        # AI Model selection
+        ttk.Label(ai_scrollable, text="AI Model:").grid(row=row, column=0, sticky='w')
+        self.ai_model_choice = tk.StringVar(value=self.config.config["step4"].get("model_choice", "model_1"))
+        old_choice = self.ai_model_choice.get()
+        if old_choice == "fastest":
+            self.ai_model_choice.set("model_1")
+        elif old_choice == "best":
+            self.ai_model_choice.set("model_4")
+        
+        self.model_labels = []
+        for i in range(4):
+            rb = ttk.Radiobutton(ai_scrollable, text=f"Model {i+1}", variable=self.ai_model_choice, value=f"model_{i+1}")
+            rb.grid(row=row, column=1+i, sticky='w')
+            self.model_labels.append(rb)
+        row += 1
+        ttk.Label(ai_scrollable, text="Model 1 = cheapest/fastest, Model 4 = smartest/slowest", 
+                 font=('Arial', 8), foreground='gray').grid(row=row, column=1, columnspan=4, sticky='w')
+        row += 1
+        
+        # API Keys
+        ttk.Label(ai_scrollable, text="API Key (Claude/OpenAI):").grid(row=row, column=0, sticky='w')
+        self.ai_api_key = tk.StringVar(value=self.config.config["step4"]["api_key"])
+        ttk.Entry(ai_scrollable, textvariable=self.ai_api_key, width=50, show="•").grid(row=row, column=1, columnspan=3, sticky='ew')
+        ttk.Label(ai_scrollable, text="console.anthropic.com or platform.openai.com", font=('Arial', 8), foreground='gray').grid(row=row, column=4, sticky='w', padx=5)
+        row += 1
+        
+        ttk.Label(ai_scrollable, text="API Key (Gemini):").grid(row=row, column=0, sticky='w')
+        self.gemini_api_key = tk.StringVar(value=self.config.config["step4"].get("gemini_api_key", ""))
+        ttk.Entry(ai_scrollable, textvariable=self.gemini_api_key, width=50, show="•").grid(row=row, column=1, columnspan=3, sticky='ew')
+        ttk.Label(ai_scrollable, text="aistudio.google.com", font=('Arial', 8), foreground='gray').grid(row=row, column=4, sticky='w', padx=5)
+        row += 1
+        
+        ttk.Label(ai_scrollable, text="Credit Limit ($):").grid(row=row, column=0, sticky='w')
+        self.credit_limit = tk.StringVar(value=str(self.config.config["step4"].get("credit_limit", "50")))
+        ttk.Entry(ai_scrollable, textvariable=self.credit_limit, width=10).grid(row=row, column=1, sticky='w')
+        ttk.Label(ai_scrollable, text="(max AI spend - stops when reached)", font=('Arial', 8), foreground='gray').grid(row=row, column=2, columnspan=3, sticky='w')
+        row += 1
+        
+        # Update model descriptions
+        self.update_model_descriptions()
+        self.ai_provider.trace('w', lambda *args: self.update_model_descriptions())
+        
+        # === Good Leads Reference Configuration ===
+        ttk.Separator(ai_scrollable, orient='horizontal').grid(row=row, column=0, columnspan=6, sticky='ew', pady=10)
+        row += 1
+        
+        ttk.Label(ai_scrollable, text="Good Leads Reference", font=('Arial', 12, 'bold')).grid(row=row, column=0, columnspan=6, sticky='w', pady=(0, 5))
+        row += 1
+        
+        ttk.Label(ai_scrollable, text="Good Leads Domains:").grid(row=row, column=0, sticky='w')
+        self.good_leads_domains = tk.StringVar(value=self.config.config["step4"].get("good_leads_domains", ""))
+        ttk.Entry(ai_scrollable, textvariable=self.good_leads_domains, width=60).grid(row=row, column=1, columnspan=4, sticky='ew')
+        row += 1
+        ttk.Label(ai_scrollable, text="Comma-separated list of domains as examples of ideal customers (e.g., company1.com, company2.com)", 
+                 font=('Arial', 8), foreground='gray').grid(row=row, column=1, columnspan=4, sticky='w')
+        row += 1
+        
+        # === Scoring Fields Configuration ===
+        ttk.Separator(ai_scrollable, orient='horizontal').grid(row=row, column=0, columnspan=6, sticky='ew', pady=10)
+        row += 1
+        
+        # Header with count control
+        scoring_header = ttk.Frame(ai_scrollable)
+        scoring_header.grid(row=row, column=0, columnspan=6, sticky='ew', pady=(0, 5))
+        ttk.Label(scoring_header, text="Scoring Fields", font=('Arial', 12, 'bold')).pack(side='left')
+        ttk.Label(scoring_header, text="   Number of fields:").pack(side='left', padx=(20, 5))
+        self.scoring_field_count = tk.StringVar(value=str(self.config.config["step4"].get("scoring_field_count", 20)))
+        ttk.Entry(scoring_header, textvariable=self.scoring_field_count, width=5).pack(side='left')
+        ttk.Button(scoring_header, text="Update", command=lambda: self._rebuild_scoring_fields(ai_scrollable)).pack(side='left', padx=5)
+        row += 1
+        
+        ttk.Label(ai_scrollable, text="Configure fields for AI to score. Empty/disabled fields are skipped.", 
+                 font=('Arial', 9), foreground='gray').grid(row=row, column=0, columnspan=6, sticky='w')
+        row += 1
+        
+        # Store reference to scrollable_frame and starting row for rebuild
+        self.scoring_fields_scrollable_frame = ai_scrollable
+        self.scoring_fields_start_row = row
+        
+        # Container for scoring fields
+        self.scoring_fields_container = ttk.Frame(ai_scrollable)
+        self.scoring_fields_container.grid(row=row, column=0, columnspan=6, sticky='ew')
+        row += 1
+        
+        # Initialize scoring field widgets storage and build
+        self.scoring_field_widgets = []
+        self._rebuild_scoring_fields(ai_scrollable, initial=True)
+        
+        # Configure scrollable frame column weights
+        ai_scrollable.columnconfigure(1, weight=1)
+        
+        # ============================================================
+        # BOTTOM SECTION: Run Controls
+        # ============================================================
+        run_frame = ttk.LabelFrame(paned, text=" Run Pipeline ", padding=10)
+        paned.add(run_frame, weight=2)
+        
+        # Initialize stats tracker
+        self.stats_tracker = RunStatsTracker()
+        
+        # Header with Run Button
+        header_frame = ttk.Frame(run_frame)
+        header_frame.pack(fill='x', pady=(5, 10))
+        
+        ttk.Label(header_frame, text="Lead Generation Pipeline", 
+                  font=('Segoe UI', 14, 'bold')).pack(side='left')
+        
+        self.run_button = ttk.Button(header_frame, text="▶ Start Run", 
+                                      command=self.run_pipeline, style='Accent.TButton')
+        self.run_button.pack(side='right', padx=10)
+        
+        # Save and Exit Run button (only shown during runs)
+        self.save_exit_run_btn = ttk.Button(header_frame, text="💾 Save & Exit Run", 
+                                             command=self.save_and_exit_run)
+        self.save_exit_run_btn.pack(side='right', padx=5)
+        self.save_exit_run_btn.pack_forget()  # Hidden by default
+        
+        # View Leads button
+        self.view_leads_btn = ttk.Button(header_frame, text="📊 View Leads", 
+                                          command=self.view_all_leads)
+        self.view_leads_btn.pack(side='right', padx=5)
+        
+        # Progress Timeline
+        timeline_frame = ttk.Frame(run_frame)
+        timeline_frame.pack(fill='x', pady=5)
+        
+        # Time labels row
+        time_row = ttk.Frame(timeline_frame)
+        time_row.pack(fill='x', pady=(0, 5))
+        
+        self.start_time_label = ttk.Label(time_row, text="Start: --:--:--", font=('Segoe UI', 9))
+        self.start_time_label.pack(side='left')
+        
+        self.eta_label = ttk.Label(time_row, text="ETA: —", font=('Segoe UI', 9, 'bold'))
+        self.eta_label.pack(side='right')
+        
+        self.elapsed_label = ttk.Label(time_row, text="Elapsed: 0s", font=('Segoe UI', 9))
+        self.elapsed_label.pack(side='right', padx=20)
+        
+        # Timeline canvas
+        self.timeline_canvas = tk.Canvas(timeline_frame, height=50, bg='#f0f0f0', 
+                                          highlightthickness=1, highlightbackground='#ccc')
+        self.timeline_canvas.pack(fill='x', pady=5)
+        self.timeline_canvas.bind('<Configure>', self._draw_timeline)
+        
+        # Stage weights for proportional widths
+        learner = get_timing_learner()
+        self.stage_weights = learner.get_learned_weights()
+        self.timing_confidence = learner.get_confidence_level()
+        
+        self.stage_names = {1: "Search", 2: "Scrape", 3: "Score", 4: "AI Analysis", 5: "Contacts"}
+        self.stage_colors = {
+            1: ('#3498db', '#2980b9'),  # Blue
+            2: ('#9b59b6', '#8e44ad'),  # Purple
+            3: ('#2ecc71', '#27ae60'),  # Green
+            4: ('#e74c3c', '#c0392b'),  # Red
+            5: ('#f39c12', '#d68910'),  # Orange
+        }
+        
+        # Current stage info
+        current_frame = ttk.Frame(run_frame)
+        current_frame.pack(fill='x', pady=5)
+        
+        stage_info = ttk.Frame(current_frame)
+        stage_info.pack(side='left', fill='x', expand=True)
+        
+        self.stage_label = ttk.Label(stage_info, text="Ready to Start", font=('Segoe UI', 12, 'bold'))
+        self.stage_label.pack(anchor='w')
+        
+        self.desc_label = ttk.Label(stage_info, text="Click 'Start Run' to begin", 
+                                     font=('Segoe UI', 9), foreground='gray')
+        self.desc_label.pack(anchor='w')
+        
+        # Right side: Percentage
+        pct_frame = ttk.Frame(current_frame)
+        pct_frame.pack(side='right', padx=20)
+        
+        self.pct_label = ttk.Label(pct_frame, text="0%", font=('Segoe UI', 28, 'bold'))
+        self.pct_label.pack()
+        
+        # Batch progress
+        batch_frame = ttk.Frame(run_frame)
+        batch_frame.pack(fill='x', pady=5)
+        
+        ttk.Label(batch_frame, text="Current batch:", font=('Segoe UI', 9)).pack(side='left')
+        self.batch_label = ttk.Label(batch_frame, text="— / —", font=('Segoe UI', 9, 'bold'))
+        self.batch_label.pack(side='left', padx=5)
+        
+        self.stage_progress = ttk.Progressbar(batch_frame, length=300, mode='determinate')
+        self.stage_progress.pack(side='left', padx=10)
+        
+        # Statistics grid
+        stats_frame = ttk.Frame(run_frame)
+        stats_frame.pack(fill='x', pady=5)
+        
+        for i in range(3):
+            stats_frame.columnconfigure(i, weight=1)
+        
+        # Row 1
+        self._add_stat_pair(stats_frame, "Discovered:", "discovered_label", 0, 0)
+        self._add_stat_pair(stats_frame, "Scraped:", "scraped_label", 0, 1)
+        self._add_stat_pair(stats_frame, "Scored:", "scored_label", 0, 2)
+        
+        # Row 2
+        self._add_stat_pair(stats_frame, "AI Analyzed:", "analyzed_label", 1, 0)
+        self._add_stat_pair(stats_frame, "Contacts:", "contacts_label", 1, 1)
+        self._add_stat_pair(stats_frame, "Search Combos:", "combos_label", 1, 2)
+        
+        # Status bar
+        status_frame = ttk.Frame(run_frame)
+        status_frame.pack(fill='x', pady=5)
+        
+        ttk.Label(status_frame, text="Status:", font=('Segoe UI', 9)).pack(side='left')
+        self.status_label = ttk.Label(status_frame, text="Ready", font=('Segoe UI', 9), foreground='gray')
+        self.status_label.pack(side='left', padx=5)
+        
+        # Start timer update loop
+        self.start_stats_timer()
     
     def setup_step2_tab(self, notebook):
         """Setup Step 2: AI Analysis configuration tab with multi-score fields."""

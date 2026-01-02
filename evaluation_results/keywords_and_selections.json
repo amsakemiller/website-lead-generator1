@@ -1,0 +1,230 @@
+{
+  "keywords": {
+    "organs": {
+      "bile": 2,
+      "biliary": 4,
+      "bladder": 40,
+      "brain": 3,
+      "colorectal": 8,
+      "colon": 8,
+      "renal": 5,
+      "liver": 51,
+      "hepatic": 6,
+      "lung": 31,
+      "pulmonary": 10,
+      "pancreatic": 1,
+      "soft tissue": 2
+    },
+    "cancer": {
+      "oncology": 25,
+      "cancer": 220,
+      "tumor": 37,
+      "malignant": 3,
+      "carcinoma": 3,
+      "neoplasm": 1,
+      "metastatic": 2,
+      "solid tumor": 7,
+      "ablation": 38,
+      "interventional": 5
+    },
+    "devices": {
+      "medical device": 16,
+      "device": 46,
+      "catheter": 73,
+      "implant": 8,
+      "ablation": 38,
+      "interventional": 5,
+      "minimally invasive": 8,
+      "endoscopic": 13,
+      "radiofrequency": 3,
+      "rf ablation": 1,
+      "ultrasound": 5,
+      "cryoablation": 4
+    },
+    "stage": {
+      "pre-clinical": 1,
+      "early stage": 2,
+      "laboratory": 15
+    },
+    "funding": {
+      "series a": 3,
+      "funding": 3,
+      "investment": 2,
+      "venture": 2,
+      "grant": 3,
+      "cprit": 2,
+      "capital": 7
+    },
+    "us_location": {
+      "usa": 15,
+      "united states": 7,
+      "boston": 18,
+      "san francisco": 2,
+      "new york": 1,
+      "texas": 2,
+      "chicago": 1,
+      "houston": 2,
+      "austin": 1
+    },
+    "negative": {
+      "phase iii": 1,
+      "fda-approved": 2,
+      "commercial": 3,
+      "bone marrow": 2,
+      "leukemia": 7,
+      "lymphoma": 7,
+      "myeloma": 8,
+      "hematologic": 3,
+      "blood cancer": 11
+    },
+    "total_content_chars": 154277,
+    "websites_with_content": 10
+  },
+  "optimal_good_leads": [
+    "https://usa.guerbet.com",
+    "https://www.aurabiosciences.com",
+    "https://www.pranasurgical.com",
+    "https://www.imchecktherapeutics.com",
+    "https://www.bd.com",
+    "https://mirai-medical.com"
+  ],
+  "all_urls_for_good_leads": [
+    "https://www.jnj.com",
+    "https://usa.guerbet.com",
+    "https://abkbiomedical.com",
+    "https://www.bd.com",
+    "https://www.earli.com",
+    "https://trisaluslifesci.com",
+    "https://www.aurabiosciences.com",
+    "https://betaglue.com",
+    "https://www.bostonscientific.com",
+    "https://mirai-medical.com",
+    "https://www.pranasurgical.com",
+    "https://www.stryker.com",
+    "https://rakuten-med.com/us",
+    "https://www.imchecktherapeutics.com",
+    "https://www.engagebio.com"
+  ],
+  "scraped_summary": [
+    {
+      "name": "J&J/Janssen",
+      "url": "https://www.jnj.com",
+      "domain": "www.jnj.com",
+      "pages_scraped": 6,
+      "content_length": 42078,
+      "scraped_at": "2026-01-02T15:58:35.536505"
+    },
+    {
+      "name": "Guerbet",
+      "url": "https://usa.guerbet.com",
+      "domain": "usa.guerbet.com",
+      "pages_scraped": 6,
+      "content_length": 10705,
+      "scraped_at": "2026-01-02T15:58:41.298399"
+    },
+    {
+      "name": "ABK Biomedical",
+      "url": "https://abkbiomedical.com",
+      "domain": "abkbiomedical.com",
+      "pages_scraped": 0,
+      "content_length": 0,
+      "scraped_at": "2026-01-02T15:58:42.320352"
+    },
+    {
+      "name": "BD",
+      "url": "https://www.bd.com",
+      "domain": "www.bd.com",
+      "pages_scraped": 6,
+      "content_length": 12298,
+      "scraped_at": "2026-01-02T15:58:46.918713"
+    },
+    {
+      "name": "Earli",
+      "url": "https://www.earli.com",
+      "domain": "www.earli.com",
+      "pages_scraped": 6,
+      "content_length": 13686,
+      "scraped_at": "2026-01-02T15:58:49.939689"
+    },
+    {
+      "name": "TriSalus",
+      "url": "https://trisaluslifesci.com",
+      "domain": "trisaluslifesci.com",
+      "pages_scraped": 0,
+      "content_length": 0,
+      "scraped_at": "2026-01-02T15:58:50.827121"
+    },
+    {
+      "name": "Aura Biosciences",
+      "url": "https://www.aurabiosciences.com",
+      "domain": "www.aurabiosciences.com",
+      "pages_scraped": 6,
+      "content_length": 5014,
+      "scraped_at": "2026-01-02T15:58:55.531942"
+    },
+    {
+      "name": "BetaGlue",
+      "url": "https://betaglue.com",
+      "domain": "betaglue.com",
+      "pages_scraped": 0,
+      "content_length": 0,
+      "scraped_at": "2026-01-02T15:58:56.452498"
+    },
+    {
+      "name": "Boston Scientific",
+      "url": "https://www.bostonscientific.com",
+      "domain": "www.bostonscientific.com",
+      "pages_scraped": 6,
+      "content_length": 29155,
+      "scraped_at": "2026-01-02T15:59:01.779937"
+    },
+    {
+      "name": "Mirai Medical",
+      "url": "https://mirai-medical.com",
+      "domain": "mirai-medical.com",
+      "pages_scraped": 3,
+      "content_length": 7726,
+      "scraped_at": "2026-01-02T15:59:05.115181"
+    },
+    {
+      "name": "Prana Thoracic",
+      "url": "https://www.pranasurgical.com",
+      "domain": "www.pranasurgical.com",
+      "pages_scraped": 6,
+      "content_length": 11770,
+      "scraped_at": "2026-01-02T15:59:07.868446"
+    },
+    {
+      "name": "Stryker",
+      "url": "https://www.stryker.com",
+      "domain": "www.stryker.com",
+      "pages_scraped": 6,
+      "content_length": 15966,
+      "scraped_at": "2026-01-02T15:59:11.403869"
+    },
+    {
+      "name": "Rakuten Medical",
+      "url": "https://rakuten-med.com/us",
+      "domain": "rakuten-med.com",
+      "pages_scraped": 0,
+      "content_length": 0,
+      "scraped_at": "2026-01-02T15:59:12.530116"
+    },
+    {
+      "name": "ImCheck Therap.",
+      "url": "https://www.imchecktherapeutics.com",
+      "domain": "www.imchecktherapeutics.com",
+      "pages_scraped": 6,
+      "content_length": 5869,
+      "scraped_at": "2026-01-02T15:59:19.134041"
+    },
+    {
+      "name": "EngageBio",
+      "url": "https://www.engagebio.com",
+      "domain": "www.engagebio.com",
+      "pages_scraped": 0,
+      "content_length": 0,
+      "scraped_at": "2026-01-02T15:59:19.936877"
+    }
+  ]
+}

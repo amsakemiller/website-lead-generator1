@@ -1,0 +1,122 @@
+[
+  {
+    "name": "J&J/Janssen",
+    "url": "https://www.jnj.com",
+    "domain": "www.jnj.com",
+    "pages_scraped": 6,
+    "content_length": 42078,
+    "scraped_at": "2026-01-02T15:58:35.536505"
+  },
+  {
+    "name": "Guerbet",
+    "url": "https://usa.guerbet.com",
+    "domain": "usa.guerbet.com",
+    "pages_scraped": 6,
+    "content_length": 10705,
+    "scraped_at": "2026-01-02T15:58:41.298399"
+  },
+  {
+    "name": "ABK Biomedical",
+    "url": "https://abkbiomedical.com",
+    "domain": "abkbiomedical.com",
+    "pages_scraped": 0,
+    "content_length": 0,
+    "scraped_at": "2026-01-02T15:58:42.320352"
+  },
+  {
+    "name": "BD",
+    "url": "https://www.bd.com",
+    "domain": "www.bd.com",
+    "pages_scraped": 6,
+    "content_length": 12298,
+    "scraped_at": "2026-01-02T15:58:46.918713"
+  },
+  {
+    "name": "Earli",
+    "url": "https://www.earli.com",
+    "domain": "www.earli.com",
+    "pages_scraped": 6,
+    "content_length": 13686,
+    "scraped_at": "2026-01-02T15:58:49.939689"
+  },
+  {
+    "name": "TriSalus",
+    "url": "https://trisaluslifesci.com",
+    "domain": "trisaluslifesci.com",
+    "pages_scraped": 0,
+    "content_length": 0,
+    "scraped_at": "2026-01-02T15:58:50.827121"
+  },
+  {
+    "name": "Aura Biosciences",
+    "url": "https://www.aurabiosciences.com",
+    "domain": "www.aurabiosciences.com",
+    "pages_scraped": 6,
+    "content_length": 5014,
+    "scraped_at": "2026-01-02T15:58:55.531942"
+  },
+  {
+    "name": "BetaGlue",
+    "url": "https://betaglue.com",
+    "domain": "betaglue.com",
+    "pages_scraped": 0,
+    "content_length": 0,
+    "scraped_at": "2026-01-02T15:58:56.452498"
+  },
+  {
+    "name": "Boston Scientific",
+    "url": "https://www.bostonscientific.com",
+    "domain": "www.bostonscientific.com",
+    "pages_scraped": 6,
+    "content_length": 29155,
+    "scraped_at": "2026-01-02T15:59:01.779937"
+  },
+  {
+    "name": "Mirai Medical",
+    "url": "https://mirai-medical.com",
+    "domain": "mirai-medical.com",
+    "pages_scraped": 3,
+    "content_length": 7726,
+    "scraped_at": "2026-01-02T15:59:05.115181"
+  },
+  {
+    "name": "Prana Thoracic",
+    "url": "https://www.pranasurgical.com",
+    "domain": "www.pranasurgical.com",
+    "pages_scraped": 6,
+    "content_length": 11770,
+    "scraped_at": "2026-01-02T15:59:07.868446"
+  },
+  {
+    "name": "Stryker",
+    "url": "https://www.stryker.com",
+    "domain": "www.stryker.com",
+    "pages_scraped": 6,
+    "content_length": 15966,
+    "scraped_at": "2026-01-02T15:59:11.403869"
+  },
+  {
+    "name": "Rakuten Medical",
+    "url": "https://rakuten-med.com/us",
+    "domain": "rakuten-med.com",
+    "pages_scraped": 0,
+    "content_length": 0,
+    "scraped_at": "2026-01-02T15:59:12.530116"
+  },
+  {
+    "name": "ImCheck Therap.",
+    "url": "https://www.imchecktherapeutics.com",
+    "domain": "www.imchecktherapeutics.com",
+    "pages_scraped": 6,
+    "content_length": 5869,
+    "scraped_at": "2026-01-02T15:59:19.134041"
+  },
+  {
+    "name": "EngageBio",
+    "url": "https://www.engagebio.com",
+    "domain": "www.engagebio.com",
+    "pages_scraped": 0,
+    "content_length": 0,
+    "scraped_at": "2026-01-02T15:59:19.936877"
+  }
+]
