@@ -1,0 +1,582 @@
+{
+  "master_csv_path": "data/leads_master.csv",
+  "performance": {
+    "ai_batch_size": 5,
+    "rate_limiter_success_threshold": 5,
+    "logging_level": "moderate",
+    "debug_file_interval": 10,
+    "always_write_debug_files": false,
+    "fuzzy_match_threshold": 85
+  },
+  "csv_output": {
+    "sanitize_commas": true,
+    "column_separator": ";",
+    "include_failed_domains": true,
+    "include_debug_columns": true,
+    "column_order": {
+      "url": 1,
+      "company_name": 2,
+      "score": 3,
+      "ai_match_score": 4,
+      "is_good_lead": 5,
+      "business_type": 6,
+      "company_description": 7,
+      "company_email": 8,
+      "contact_1_name": 9,
+      "contact_1_position": 10,
+      "contact_1_email": 11,
+      "contact_1_score": 12,
+      "subdomains_visited": 13,
+      "processing_date": 14,
+      "error_message": 0,
+      "pages_crawled": 0,
+      "content_length": 0
+    },
+    "delimiter": ";"
+  },
+  "step1": {
+    "api_choice": "serper",
+    "api_key": "YOUR_SERPER_API_KEY_HERE",
+    "region": "us",
+    "max_results": 10,
+    "output_path": "data/leads_raw.csv",
+    "request_timeout_seconds": 15,
+    "concurrency": 25,
+    "verify_domains": true,
+    "record_failed_domains": true,
+    "rate_limit_initial": 0.35,
+    "rate_limit_min": 0.05,
+    "rate_limit_max": 2.0,
+    "keyword_boxes": [
+      "medical device, interventional device, therapeutic device, ablation device, drug delivery device",
+      "oncology, cancer treatment, tumor ablation, solid tumor, cancer therapy",
+      "preclinical, pre-clinical, translational research, early stage development, R&D stage",
+      "ablation, embolization, minimally invasive, catheter-based, interventional radiology",
+      "liver tumor, lung cancer device, pancreatic cancer, kidney tumor",
+      "",
+      "",
+      ""
+    ],
+    "serper_set_keywords": "medical device",
+    "serper_variable_keywords": "oncology, tumor, device, therapeutic, preclinical, ablation, interventional, drug delivery, implantable, solid tumor, localized, cancer, therapy, nanoparticle, photothermal, radiofrequency, bile duct, bladder, brain, glioma, colorectal, kidney, liver, lung, pancreas, soft tissue chemoembolization, ultrasound, translational, oncology biotech",
+    "serper_combo_cap": 2500,
+    "serper_max_terms": 8,
+    "serper_current_seed": null,
+    "serper_last_seed": null,
+    "reanalysis_period": 0,
+    "keyword_box_count": 8
+  },
+  "step2": {
+    "user_agent": "LeadGenBot/1.0 (+https://susclinicals.com/) Unified",
+    "timeout_sec": 20,
+    "read_limit_bytes": 2000000,
+    "max_pages_per_site": 12,
+    "max_depth": 2,
+    "global_concurrency": 60,
+    "per_domain_concurrency": 6,
+    "robots_cache_ttl_sec": 3600,
+    "min_chars_per_page": 400,
+    "aggregate_char_cap": 120000,
+    "max_chars_per_page": 50000,
+    "max_chars_per_scrape": 200000,
+    "respect_robots": true,
+    "follow_sitemaps": true,
+    "db_path": "data/webcrawl.db",
+    "contact_priority_keywords": "contact, team, about, leadership, management, executives, staff, people, our-team, meet-the-team, who-we-are, about-us, contact-us"
+  },
+  "step3": {
+    "score_threshold": 60,
+    "output_path": "data/analysis_results.csv",
+    "threshold_type": "score",
+    "threshold_value": "60",
+    "use_score_threshold": true,
+    "use_percentage_threshold": false,
+    "use_count_threshold": false,
+    "percentage_value": 20,
+    "count_value": 100,
+    "fuzzy_match_threshold": 85,
+    "positive_factors": [
+      {
+        "name": "US Location",
+        "weight": 500,
+        "sensitivity": 1,
+        "keywords": "usa, united states, us-based, boston, san francisco, new york, california, texas, massachusetts, pennsylvania, new jersey, chicago, houston, philadelphia, austin, denver, seattle, miami, headquarters in the us, based in the us"
+      },
+      {
+        "name": "Cancer/Oncology Focus",
+        "weight": 300,
+        "sensitivity": 2,
+        "keywords": "oncology, cancer, tumor, tumour, solid tumor, malignant, carcinoma, neoplasm, metastatic, ablation therapy, cancer treatment"
+      },
+      {
+        "name": "Target Organs",
+        "weight": 250,
+        "sensitivity": 2,
+        "keywords": "liver, hepatic, lung, pulmonary, pancreas, pancreatic, kidney, renal, bladder, bile duct, biliary, brain, glioma, colorectal, colon, soft tissue, sarcoma"
+      },
+      {
+        "name": "Medical Device",
+        "weight": 200,
+        "sensitivity": 2,
+        "keywords": "medical device, device, catheter, implant, ablation, interventional, minimally invasive, endoscopic, drug delivery, microsphere, radiofrequency, rf ablation, microwave, thermal, cryoablation, embolization, electroporation"
+      },
+      {
+        "name": "Preclinical Stage",
+        "weight": 300,
+        "sensitivity": 1,
+        "keywords": "preclinical, pre-clinical, translational, early stage, r&d, research and development, proof of concept, animal study, in vivo, in vitro, laboratory research"
+      },
+      {
+        "name": "Funding Signals",
+        "weight": 150,
+        "sensitivity": 2,
+        "keywords": "series a, series b, series c, funding, raised, investment, venture, grant, nih, sbir, sttr, cprit, capital, investors"
+      },
+      {
+        "name": "Factor 7",
+        "weight": 100,
+        "sensitivity": 1,
+        "keywords": ""
+      },
+      {
+        "name": "Factor 8",
+        "weight": 100,
+        "sensitivity": 1,
+        "keywords": ""
+      }
+    ],
+    "negative_factors": [
+      {
+        "name": "Liquid/Blood Cancers",
+        "weight": 40,
+        "sensitivity": 1,
+        "keywords": "bone marrow, leukemia, lymphoma, myeloma, hematologic, liquid cancer, blood cancer"
+      },
+      {
+        "name": "Already FDA Approved",
+        "weight": 30,
+        "sensitivity": 1,
+        "keywords": "fda approved, fda-approved, fda cleared, fda-cleared, 510k cleared, commercially available, on market, market leader"
+      },
+      {
+        "name": "Late Clinical Stage",
+        "weight": 20,
+        "sensitivity": 2,
+        "keywords": "phase iii, phase 3, phase ii, phase 2, pivotal trial, registration trial, nda, pma approved"
+      },
+      {
+        "name": "Disqualifier 4",
+        "weight": 10,
+        "sensitivity": 1,
+        "keywords": ""
+      },
+      {
+        "name": "Disqualifier 5",
+        "weight": 10,
+        "sensitivity": 1,
+        "keywords": ""
+      },
+      {
+        "name": "Disqualifier 6",
+        "weight": 10,
+        "sensitivity": 1,
+        "keywords": ""
+      },
+      {
+        "name": "Disqualifier 7",
+        "weight": 10,
+        "sensitivity": 1,
+        "keywords": ""
+      },
+      {
+        "name": "Disqualifier 8",
+        "weight": 10,
+        "sensitivity": 1,
+        "keywords": ""
+      }
+    ],
+    "positive_factor_count": 8,
+    "negative_factor_count": 8
+  },
+  "step4": {
+    "model_choice": "model_1",
+    "api_provider": "claude",
+    "api_key": "YOUR_ANTHROPIC_API_KEY_HERE",
+    "gemini_api_key": "",
+    "model": "claude-3-5-haiku-20241022",
+    "claude_models": [
+      {
+        "name": "Haiku 3.5",
+        "api_id": "claude-3-5-haiku-20241022",
+        "cost_per_100": 0.84
+      },
+      {
+        "name": "Sonnet 4",
+        "api_id": "claude-sonnet-4-20250514",
+        "cost_per_100": 3.15
+      },
+      {
+        "name": "Sonnet 3.7",
+        "api_id": "claude-3-7-sonnet-20250219",
+        "cost_per_100": 3.15
+      },
+      {
+        "name": "Opus 4",
+        "api_id": "claude-opus-4-20250514",
+        "cost_per_100": 15.75
+      }
+    ],
+    "openai_models": [
+      {
+        "name": "GPT-4o-mini",
+        "api_id": "gpt-4o-mini",
+        "cost_per_100": 0.14
+      },
+      {
+        "name": "GPT-4o",
+        "api_id": "gpt-4o",
+        "cost_per_100": 2.25
+      },
+      {
+        "name": "GPT-4.1",
+        "api_id": "gpt-4.1",
+        "cost_per_100": 3.0
+      },
+      {
+        "name": "GPT-4.1-mini",
+        "api_id": "gpt-4.1-mini",
+        "cost_per_100": 0.7
+      }
+    ],
+    "gemini_models": [
+      {
+        "name": "Flash 2.5 Lite",
+        "api_id": "gemini-2.5-flash-preview-05-20",
+        "cost_per_100": 0.07
+      },
+      {
+        "name": "Flash 2.5",
+        "api_id": "gemini-2.5-flash-preview-04-17",
+        "cost_per_100": 0.14
+      },
+      {
+        "name": "Pro 2.5",
+        "api_id": "gemini-2.5-pro-preview-05-06",
+        "cost_per_100": 2.5
+      },
+      {
+        "name": "Pro 1.5",
+        "api_id": "gemini-1.5-pro",
+        "cost_per_100": 1.75
+      }
+    ],
+    "max_tokens": 2000,
+    "credit_limit": 30.0,
+    "max_retries": 3,
+    "log_level": "INFO",
+    "batch_size": 5,
+    "checkpoint_interval": 5,
+    "results_file": "data/ai_analysis_results.csv",
+    "custom_explanation": "",
+    "examples_folder": "",
+    "company_description_prompt": "",
+    "async_batch_size": 5,
+    "max_content_chars": 10000,
+    "skip_if_processed_within_days": 0,
+    "provider_choice": "claude",
+    "good_leads_domains": "https://www.jnj.com, https://usa.guerbet.com, https://abkbiomedical.com, https://www.bd.com, https://www.earli.com, https://trisaluslifesci.com, https://www.aurabiosciences.com, https://betaglue.com, https://www.bostonscientific.com, https://mirai-medical.com, https://www.pranasurgical.com, https://www.stryker.com, https://rakuten-med.com/us, https://www.imchecktherapeutics.com, https://www.engagebio.com",
+    "good_leads_max_pages_per_site": 12,
+    "good_leads_max_depth": 2,
+    "good_leads_max_chars_per_page": 50000,
+    "good_leads_aggregate_char_cap": 120000,
+    "good_leads_summarization_prompt": "Analyze these websites of ideal customer companies. For each, summarize: what type of business they are, their main products/services, their location/headquarters, their company size/funding stage, and what makes them an ideal customer. Remove marketing fluff and focus on concrete facts. This summary will be used as reference examples for identifying similar good leads.",
+    "good_leads_max_summary_chars": 8000,
+    "good_leads_summary_cache": "",
+    "scoring_field_count": 20,
+    "scoring_fields": [
+      {
+        "enabled": true,
+        "type": "score",
+        "title": "US-Based",
+        "min": 0,
+        "max": 2,
+        "prompt": "Assign a score of 0 if you are certain this business is not based in the US and has no US operations. Assign a score of 1 if you are unsure whether the business is US-based OR if the business is not US-headquartered but has confirmed US operations. Assign a score of 2 if you are confident this business is headquartered in the United States.",
+        "allow_unlisted": true,
+        "allow_multiple": false,
+        "options": []
+      },
+      {
+        "enabled": true,
+        "type": "score",
+        "title": "Funding Status",
+        "min": 0,
+        "max": 10,
+        "prompt": "Assign a funding score from 0-10. Consider: recent funding rounds (Series A/B/C); grant awards; products already in market; partnerships with major companies; significant hiring; professional website quality. Score 0 if business appears defunct or unfunded. Score 1-3 for early-stage with minimal funding evidence. Score 4-6 for moderate funding indicators. Score 7-10 for well-funded companies with clear evidence of substantial capital.",
+        "allow_unlisted": true,
+        "allow_multiple": false,
+        "options": []
+      },
+      {
+        "enabled": true,
+        "type": "text",
+        "title": "Organs",
+        "min": 0,
+        "max": 10,
+        "prompt": "Identify which organs or body systems this company's products/services target. Select all that apply.",
+        "allow_unlisted": true,
+        "allow_multiple": true,
+        "options": [
+          "Liver",
+          "Pancreas",
+          "Lung",
+          "Brain/CNS",
+          "Kidney",
+          "Bladder",
+          "Bile Duct",
+          "Colorectal",
+          "Soft Tissue",
+          "Heart",
+          "GI Tract",
+          "Skin",
+          "Bone/Musculoskeletal",
+          "Blood/Hematology",
+          "Other"
+        ]
+      },
+      {
+        "enabled": true,
+        "type": "score",
+        "title": "Pre-Clinical Status",
+        "min": 0,
+        "max": 3,
+        "prompt": "Assess the company's product development stage. Score 0 if no clear product is in development, or if all products are already FDA-Approved. Score 1 for clinical trials. Score 2 for early product development and R&D. Score 3 for preclinical development (ideal for large animal testing). The score should reflect the highest score of all products in development. So, if one product is phase III but another is in preclinical development, assign a score of 3.",
+        "allow_unlisted": true,
+        "allow_multiple": false,
+        "options": []
+      },
+      {
+        "enabled": true,
+        "type": "text",
+        "title": "Type of Cancer",
+        "min": 0,
+        "max": 10,
+        "prompt": "Identify the type of cancer products from this company focus on.",
+        "allow_unlisted": true,
+        "allow_multiple": true,
+        "options": [
+          "Solid Tumor",
+          "Bone Marrow/Myeloma Cancer",
+          "Liquid/Hematologic Cancers",
+          "Not Cancer Focused",
+          "Other"
+        ]
+      },
+      {
+        "enabled": true,
+        "type": "text",
+        "title": "Business Type",
+        "min": 0,
+        "max": 10,
+        "prompt": "Categorize this business into one primary type based on their core offering.",
+        "allow_unlisted": true,
+        "allow_multiple": false,
+        "options": [
+          "Medical Device Manufacturer",
+          "Drug/Device Combination",
+          "Biotech/Pharma",
+          "CRO (Contract Research Organization)",
+          "Diagnostics",
+          "Academic/Research Institution",
+          "Other Healthcare"
+        ]
+      },
+      {
+        "enabled": true,
+        "type": "score",
+        "title": "Overall Score",
+        "min": 0,
+        "max": 10,
+        "prompt": "Score how well this company fits as a prospect for preclinical large animal (porcine) testing services. Consider: Are they at the right development stage (preclinical)? Do they have a medical device that would benefit from pig model testing? Are they well-funded enough to afford preclinical studies ($200-500K)? Do they treat solid tumors (not liquid cancers)? Are they US-based? Score 0-3 for poor fit; 4-6 for moderate fit; 7-10 for excellent fit.",
+        "allow_unlisted": true,
+        "allow_multiple": false,
+        "options": []
+      },
+      {
+        "enabled": false,
+        "type": "score",
+        "title": "",
+        "min": 0,
+        "max": 10,
+        "prompt": "",
+        "allow_unlisted": true,
+        "allow_multiple": false,
+        "options": []
+      },
+      {
+        "enabled": false,
+        "type": "score",
+        "title": "",
+        "min": 0,
+        "max": 10,
+        "prompt": "",
+        "allow_unlisted": true,
+        "allow_multiple": false,
+        "options": []
+      },
+      {
+        "enabled": false,
+        "type": "score",
+        "title": "",
+        "min": 0,
+        "max": 10,
+        "prompt": "",
+        "allow_unlisted": true,
+        "allow_multiple": false,
+        "options": []
+      },
+      {
+        "enabled": false,
+        "type": "score",
+        "title": "",
+        "min": 0,
+        "max": 10,
+        "prompt": "",
+        "allow_unlisted": true,
+        "allow_multiple": false,
+        "options": []
+      },
+      {
+        "enabled": false,
+        "type": "score",
+        "title": "",
+        "min": 0,
+        "max": 10,
+        "prompt": "",
+        "allow_unlisted": true,
+        "allow_multiple": false,
+        "options": []
+      },
+      {
+        "enabled": false,
+        "type": "score",
+        "title": "",
+        "min": 0,
+        "max": 10,
+        "prompt": "",
+        "allow_unlisted": true,
+        "allow_multiple": false,
+        "options": []
+      },
+      {
+        "enabled": false,
+        "type": "score",
+        "title": "",
+        "min": 0,
+        "max": 10,
+        "prompt": "",
+        "allow_unlisted": true,
+        "allow_multiple": false,
+        "options": []
+      },
+      {
+        "enabled": false,
+        "type": "score",
+        "title": "",
+        "min": 0,
+        "max": 10,
+        "prompt": "",
+        "allow_unlisted": true,
+        "allow_multiple": false,
+        "options": []
+      },
+      {
+        "enabled": false,
+        "type": "score",
+        "title": "",
+        "min": 0,
+        "max": 10,
+        "prompt": "",
+        "allow_unlisted": true,
+        "allow_multiple": false,
+        "options": []
+      },
+      {
+        "enabled": false,
+        "type": "score",
+        "title": "",
+        "min": 0,
+        "max": 10,
+        "prompt": "",
+        "allow_unlisted": true,
+        "allow_multiple": false,
+        "options": []
+      },
+      {
+        "enabled": false,
+        "type": "score",
+        "title": "",
+        "min": 0,
+        "max": 10,
+        "prompt": "",
+        "allow_unlisted": true,
+        "allow_multiple": false,
+        "options": []
+      },
+      {
+        "enabled": false,
+        "type": "score",
+        "title": "",
+        "min": 0,
+        "max": 10,
+        "prompt": "",
+        "allow_unlisted": true,
+        "allow_multiple": false,
+        "options": []
+      },
+      {
+        "enabled": false,
+        "type": "score",
+        "title": "",
+        "min": 0,
+        "max": 10,
+        "prompt": "",
+        "allow_unlisted": true,
+        "allow_multiple": false,
+        "options": []
+      }
+    ]
+  },
+  "step5": {
+    "enabled": true,
+    "contact_extraction_prompt": "Extract contact information from this website content. Look for:\n1. A general company contact email (like info@, contact@, hello@, sales@)\n2. Individual team members/employees with their contact details\n\nFor each person found, extract:\n- Full name\n- Position/Title  \n- Email address\n- Phone number (if available)\n\nFocus on finding decision-makers, executives, and key personnel.",
+    "contact_scoring_prompt": "Score this contact based on their title/position for B2B sales outreach in the healthcare/medical device/preclinical research industry.\n\nSENIORITY SCORE (1-4):\n- 4 = Highest: CEO, Founder, Co-Founder, Chairman, President, Owner (top decision-makers)\n- 3 = High: Chief Officers (CSO, CTO, CMO, COO), Vice President, EVP, SVP, Global Head, Head of Department\n- 2 = Medium: Director, Senior Director, Executive Director, Scientific Advisor, Senior Scientist\n- 1 = Lower: Associate Director, Manager, Scientist, Principal Investigator, Group Leader, Data Scientist\n\nFIT SCORE (1-4) - How relevant is this person for preclinical/translational research sales:\n- 4 = Excellent fit: Title contains \"Preclinical\", \"Translational\", \"Discovery\" combined with seniority, OR is a Founder/CEO/President (they oversee preclinical teams)\n- 3 = Good fit: Scientific/Research leadership roles (CSO, CTO, VP Research, Head of R&D), titles mentioning \"Scientific\", \"Research\", \"In Vivo\", \"In Vitro\"\n- 2 = Moderate fit: General scientific roles with oncology/cancer/immunology focus, Drug Development, Medical Affairs, Pharmacology\n- 1 = Lower fit: Business Development, Operations, Economic, Project Management, pure administrative roles, general Director/Manager without scientific context\n\nNOTE: Most senior people (CEO, Founder, etc.) automatically get highest \"fit\" score since preclinical teams report to them.",
+    "max_contacts": 5,
+    "seniority_4_titles": "CEO, Founder, Co-Founder, Chairman, President, Owner, Chief Executive Officer, Managing Director, Principal",
+    "seniority_3_titles": "CSO, CTO, CMO, COO, Chief Scientific Officer, Chief Technology Officer, Chief Medical Officer, Vice President, VP, EVP, SVP, Head of R&D, Head of Research, Head of Preclinical, Head of Development",
+    "seniority_2_titles": "Director, Senior Director, Executive Director, Scientific Advisor, Senior Scientist, Principal Scientist, Lead Scientist, VP Research, Director of Research, Director of Preclinical",
+    "seniority_1_titles": "Manager, Senior Manager, Scientist, Principal Investigator, Research Scientist, Project Lead, Team Lead, Associate Director",
+    "fit_4_titles": "Preclinical, Translational, Discovery, In Vivo, Animal Studies, CEO, Founder, President, Chief Scientific Officer, CSO, Head of R&D",
+    "fit_3_titles": "Research, R&D, Scientific, Laboratory, Device Development, Product Development, Oncology, Cancer, VP Research, Director Research",
+    "fit_2_titles": "Medical Device, Device Engineering, Regulatory, Clinical Development, Medical Affairs, Biomedical, Engineering",
+    "fit_1_titles": "Business Development, Operations, Project Management, Quality, Manufacturing, Sales, Marketing"
+  },
+  "user_inputs": {
+    "business_name": "Sus Clinicals",
+    "website_url": "https://susclinicals.com",
+    "product_description": "Preclinical large animal (porcine/pig model) testing services for medical device companies developing cancer therapeutics. Studies typically cost $200-500K.",
+    "price_min": "200000",
+    "price_max": "500000",
+    "ideal_customer": "Medical device companies developing therapeutic devices for solid tumor cancers (liver, lung, pancreas, kidney, bladder, bile duct, brain/glioma, colorectal, soft tissue). Must be in preclinical phase - completed initial lab research but not yet in human clinical trials. Well-funded (Series A+ or significant grants) and US-based.",
+    "company_size": "Series A+ funded startups, or established medtech companies with preclinical R&D programs",
+    "geography": "US only (headquartered or with US operations)",
+    "seniority_levels": "CEO, Founder, CSO, CTO, VP R&D, Head of Preclinical, Director of Research",
+    "departments": "R&D, Preclinical Development, Translational Research, Scientific, Device Development",
+    "exclusions": "Liquid/blood cancers (leukemia, lymphoma, myeloma), bone marrow cancers, already FDA-approved products, late clinical stage (Phase II/III), companies outside the US, pure pharma without device component",
+    "good_leads": "https://www.jnj.com, https://usa.guerbet.com, https://abkbiomedical.com, https://www.bd.com, https://www.earli.com, https://trisaluslifesci.com, https://www.aurabiosciences.com, https://betaglue.com, https://www.bostonscientific.com, https://mirai-medical.com, https://www.pranasurgical.com, https://www.stryker.com, https://rakuten-med.com/us, https://www.imchecktherapeutics.com, https://www.engagebio.com",
+    "search_keywords": "Category 1 (Cancer): cancer, oncology, tumor, solid tumor, malignancy, carcinoma, immuno-oncology, anti-tumor\nCategory 2 (Organs): bile duct, biliary, cholangiocarcinoma, bladder, urothelial, brain, glioma, glioblastoma, GBM, colorectal, CRC, kidney, renal, RCC, liver, hepatic, HCC, lung, pulmonary, NSCLC, pancreas, pancreatic, PDAC, soft tissue, sarcoma\nCategory 3 (Device): medical device, medtech, therapeutic device, ablation, drug delivery, device-drug combination, minimally invasive, thermal ablation, cryoablation, radiofrequency, microwave ablation, electroporation, IRE, HIFU, focused ultrasound, brachytherapy, intratumoral\nCategory 4 (Stage): preclinical, pre-clinical, translational, proof of concept, early-stage, animal study, in vivo, large animal, porcine, IND-enabling, pre-IND, GLP, feasibility",
+    "other_context": "A good lead MUST hit ALL these marks: 1) Medical device therapeutic for cancer, 2) Treats SOLID tumors only (not liquid/blood cancers), 3) Targets: bile duct, bladder, brain/glioma, colorectal, kidney, liver, lung, pancreas, soft tissue, 4) Preclinical phase (not FDA approved, not in late clinical trials), 5) Sufficient capital for $200-500K studies, 6) US-based",
+    "extract_contacts": true,
+    "single_prompt_response": ""
+  },
+  "github_auto_sync": false
+}

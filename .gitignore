@@ -18,7 +18,7 @@ run_logs/
 *.sqlite3
 
 # Config files with sensitive data (user should create their own)
-unified_config.json
+# unified_config.json  # Temporarily tracked for easy deployment
 
 # IDE
 .vscode/
